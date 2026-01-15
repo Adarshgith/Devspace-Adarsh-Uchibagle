@@ -1,11 +1,9 @@
 import { defineType, defineField } from 'sanity';
-import { RiScrollToBottomLine } from "react-icons/ri";
 
 export default defineType({
   name: 'jumpToSection',
   type: 'object',
   title: 'Jump To Section',
-  icon: RiScrollToBottomLine,
   fields: [
     defineField({
         name: 'title',
