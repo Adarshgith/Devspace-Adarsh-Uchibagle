@@ -1,11 +1,9 @@
 import { defineType, defineField } from 'sanity';
-import { RiArticleLine } from 'react-icons/ri';
 
 export default defineType({
   name: 'contentBlock',
   title: 'Content Block',
   type: 'object',
-  icon: RiArticleLine,
   fields: [
     defineField({
       name: 'title',
