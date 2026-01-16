@@ -35,14 +35,7 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true, // ← Add this line
   },
   
-  // ... rest of your config
-  // Disable experimental features that might cause connection issues
-  experimental: {
-    // Disable turbopack for stability with React 19
-    turbo: undefined,
-    // Disable worker threads for Windows build issues
-    workerThreads: false,
-  },
+  // ... rest of your confinguration
   // External packages for server components
   serverExternalPackages: ['@sanity/client'],
   // Improve connection stability

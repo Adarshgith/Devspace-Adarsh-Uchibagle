@@ -57,7 +57,7 @@ const REDIRECTS: Record<string, string> = {
 const pageCache = new Map<string, { exists: boolean; type: string; timestamp: number }>()
 const CACHE_TTL = 5 * 60 * 1000 // 5 minutes
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
   const url = request.nextUrl.clone()
 
@@ -242,7 +242,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next()
 
   } catch (error) {
-    console.error('Middleware error:', error)
+    console.error('proxy error:', error)
     // On error, continue to the original request to prevent blocking
     return NextResponse.next()
   }
