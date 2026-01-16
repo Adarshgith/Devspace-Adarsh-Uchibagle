@@ -22,7 +22,7 @@
     "@hookform/resolvers": "^5.1.1",
     "@next/third-parties": "^15.3.5",
     "@portabletext/react": "^3.2.1",
-    "@sanity/client": "^7.6.0",
+    "@sanity/client": "^7.14.0",
     "@sanity/image-url": "^1.1.0",
     "@sanity/vision": "^4.10.0",
     "@tailwindcss/aspect-ratio": "^0.4.2",
@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "@next/bundle-analyzer": "^15.3.5",
+    "@next/bundle-analyzer": "^15.5.9",
     "@tailwindcss/postcss": "^4.1.11",
     "@types/node": "^20",
     "@types/react": "^19",

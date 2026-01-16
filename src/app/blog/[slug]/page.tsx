@@ -9,9 +9,9 @@ import { formatDate, getReadingTime, generateMetaDescription } from '@/lib/utils
 import { urlFor } from '@/lib/sanity'
 import BlogCard from '@/components/blog/BlogCard'
 import Breadcrumbs from '@/components/ui/Breadcrumbs'
-import SocialShare from '@/components/ui/SocialShare'
 import PortableTextRenderer from '@/components/ui/PortableTextRenderer'
 import Image from 'next/image'
+
 
 interface BlogPostPageProps {
   params: Promise<{
@@ -316,11 +316,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                         <Share2 className="w-5 h-5 mr-2" />
                         Share Article
                       </h3>
-                      <SocialShare 
+                      {/* <SocialShare 
                         url={shareUrl}
                         title={blog.title}
                         description={blog.excerpt}
-                      />
+                      /> */}
                     </div>
                     
                     {/* Table of Contents (if needed) */}
