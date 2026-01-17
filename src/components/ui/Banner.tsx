@@ -60,7 +60,7 @@ const Button = ({ text, url, openInNewTab, style }: ButtonProps) => {
 // Regular Banner Component
 export const Banner = ({ heading, subheading, content, button, className }: BannerProps) => {
   return (
-    <div className={`bg-gradient-to-r from-blue-50 to-indigo-100 py-12 px-6 rounded-lg ${className || ''}`}>
+    <div className={`bg-gradient-to-r from-red-50 to-indigo-100 py-12 px-6 rounded-lg ${className || ''}`}>
       <div className="max-w-4xl mx-auto text-center">
         <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
           {heading}
