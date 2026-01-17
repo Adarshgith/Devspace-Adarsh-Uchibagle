@@ -36,9 +36,19 @@ export default function InfoBox({
   button
 }: InfoBoxProps) {
   const renderMedia = () => {
+    let imageUrl = '';
+    if (image) {
+      // Use direct URL if available, otherwise use urlFor for Sanity images
+      imageUrl = image.asset?.url || urlFor(image).width(600).height(400).url();
+      // Debug: log image object and generated URL
+      // eslint-disable-next-line no-console
+      console.log('InfoBox image:', image);
+      // eslint-disable-next-line no-console
+      console.log('InfoBox image url:', imageUrl);
+    }
     if (video) {
       return (
-        <div className="relative w-full h-full mb-4">
+        <div className="relative w-full h-64 mb-4">
           <iframe
             src={video}
             title={title || 'Video'}
@@ -53,13 +63,15 @@ export default function InfoBox({
 
     if (image) {
       return (
-        <div className="relative w-full h-64 mb-4">
+        <div className="w-full mb-4 rounded-lg overflow-hidden bg-gray-100">
           <Image
-            src={urlFor(image).width(600).height(400).url()}
+            src={imageUrl}
             alt={image.alt || title || 'InfoBox image'}
-            fill
-            className="object-cover rounded-lg"
+            width={600}
+            height={400}
+            className="w-full h-auto object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            unoptimized
           />
         </div>
       )
@@ -68,56 +80,56 @@ export default function InfoBox({
     return null
   }
 
-  const renderContent = () => (
-    <div className={`flex-1 ${textSectionPadding ? `p-${textSectionPadding}` : 'p-6'}`}>
-      {sectionTitle && (
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">
-          {sectionTitle}
-        </h3>
-      )}
+const renderContent = () => (
+  <div className={`flex-1 ${textSectionPadding ? `p-${textSectionPadding}` : 'p-6'}`}>
+    {sectionTitle && (
+      <h3 className="text-2xl font-bold text-gray-900 mb-4">
+        {sectionTitle}
+      </h3>
+    )}
 
-      {title && !sectionTitle && (
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">
-          {title}
-        </h3>
-      )}
+    {title && !sectionTitle && (
+      <h3 className="text-xl font-semibold text-gray-900 mb-4">
+        {title}
+      </h3>
+    )}
 
-      {content && (
-        <div className="prose prose-lg max-w-none mb-4">
-          <PortableTextRenderer content={content} />
-        </div>
-      )}
+    {content && (
+      <div className="prose prose-lg max-w-none mb-4">
+        <PortableTextRenderer content={content} />
+      </div>
+    )}
 
-      {button && button.buttonText && (
-        <div className="mt-6">
-          {button.buttonLink ? (
-            <Link
-              href={button.buttonLink}
-              target={button.openInNewTab ? '_blank' : '_self'}
-              rel={button.openInNewTab ? 'noopener noreferrer' : undefined}
-              className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
-                button.buttonStyle === 'secondary'
-                  ? 'bg-gray-200 text-gray-900 hover:bg-gray-300'
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
-            >
-              {button.buttonText}
-            </Link>
-          ) : (
-            <button
-              className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
-                button.buttonStyle === 'secondary'
-                  ? 'bg-gray-200 text-gray-900 hover:bg-gray-300'
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
-            >
-              {button.buttonText}
-            </button>
-          )}
-        </div>
-      )}
-    </div>
-  )
+    {button && button.buttonText && (
+      <div className="mt-6">
+        {button.buttonLink ? (
+          <Link
+            href={button.buttonLink}
+            target={button.openInNewTab ? '_blank' : '_self'}
+            rel={button.openInNewTab ? 'noopener noreferrer' : undefined}
+            className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
+              button.buttonStyle === 'secondary'
+                ? 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+                : 'bg-blue-600 text-white hover:bg-blue-700'
+            }`}
+          >
+            {button.buttonText}
+          </Link>
+        ) : (
+          <button
+            className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
+              button.buttonStyle === 'secondary'
+                ? 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+                : 'bg-blue-600 text-white hover:bg-blue-700'
+            }`}
+          >
+            {button.buttonText}
+          </button>
+        )}
+      </div>
+    )}
+  </div>
+)
 
   const mediaComponent = renderMedia()
   const contentComponent = renderContent()

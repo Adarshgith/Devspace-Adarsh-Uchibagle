@@ -138,6 +138,7 @@ export default function Header({ siteSettings }: HeaderProps) {
                   height={40}
                   className="h-8 lg:h-10 w-auto"
                   priority
+                  unoptimized
                 />
               ) : (
                 <div className="text-xl lg:text-2xl font-bold text-gray-900">

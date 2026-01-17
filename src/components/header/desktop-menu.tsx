@@ -113,7 +113,7 @@ const DesktopMenu = ({ menuTexts, mobileMenuTexts, siteSettings }: DesktopMenuPr
         >
           <div className='w-1/6 flex items-center justify-between max-[480px]:max-w-[175px]'>
             <Link href="/">
-              <Image className='block max-lg:hidden max-xl:max-w-[240px]' src={siteSettings.siteLogo.asset.url} width={100} height={50} alt={siteSettings.title} priority />
+              <Image className='block max-lg:hidden max-xl:max-w-[240px]' src={siteSettings.siteLogo.asset.url} width={100} height={50} alt={siteSettings.title} unoptimized priority />
             </Link>
           </div>
           <ul className="level1 w-5/6 z-50 max-lg:fixed max-lg:left-0 max-lg:top-0 max-lg:h-full max-lg:w-full max-lg:min-w-[300px] max-lg:space-y-3 max-lg:overflow-auto max-lg:bg-white max-lg:p-6 max-lg:shadow-md lg:mt-0 lg:flex lg:justify-center xl:gap-x-[54px] lg:gap-x-[45px]">

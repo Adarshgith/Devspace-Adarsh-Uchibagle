@@ -162,6 +162,7 @@ const components: PortableTextComponents = {
               height={600}
               className="w-full h-auto object-cover"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+              unoptimized
             />
           </div>
           {value.caption && (

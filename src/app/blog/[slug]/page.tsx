@@ -162,6 +162,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 fill
                 className="object-cover opacity-30"
                 priority
+                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent"></div>
             </div>

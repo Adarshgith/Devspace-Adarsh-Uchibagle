@@ -164,6 +164,7 @@ export default async function NewsPage({ params }: NewsPageProps) {
                 fill
                 className="object-cover"
                 priority
+                unoptimized
               />
               <div className="absolute inset-0 bg-black bg-opacity-40" />
               

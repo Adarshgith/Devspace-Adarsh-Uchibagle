@@ -15,7 +15,6 @@ try {
 const nextConfig: NextConfig = {
   // Image optimization configuration
   images: {
-    domains: ['cdn.sanity.io'],
     remotePatterns: [
       {
         protocol: 'https',

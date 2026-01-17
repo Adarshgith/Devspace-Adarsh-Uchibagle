@@ -79,6 +79,7 @@ export default function Footer({ siteSettings }: FooterProps) {
                     width={150}
                     height={50}
                     className="h-10 w-auto"
+                    unoptimized
                   />
                 ) : (
                   <div className="text-2xl font-bold">

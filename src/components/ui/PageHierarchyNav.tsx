@@ -66,6 +66,7 @@ export default function PageHierarchyNav({
                           alt={child.featuredImage.alt || child.title}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-200"
+                          unoptimized
                         />
                       </div>
                     )}

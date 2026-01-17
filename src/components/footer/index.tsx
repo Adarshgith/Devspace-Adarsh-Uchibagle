@@ -65,7 +65,7 @@ export default async function Footer() {
             <div className='mb-[30px] max-md:mb-6'>
               {/* <p className='text-base-100'>{siteSettings.description}</p> */}
               <Link href="/" className='flex items-end max-w-[345px] max-md:items-center max-md:justify-start'>
-                <Image className='block' src={siteSettings.footerLogo.asset.url} width={689} height={139} alt={siteSettings.title} priority />
+                <Image className='block' src={siteSettings.footerLogo.asset.url} width={689} height={139} alt={siteSettings.title} unoptimized priority />
                 {/* <Image className='hidden max-md:block' src={siteSettings.footerLogo.asset.url} width={689} height={139} alt={siteSettings.title} priority /> */}
               </Link>
             </div>

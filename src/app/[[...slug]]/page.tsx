@@ -270,6 +270,7 @@ export default async function CustomPage({ params }: CustomPageProps) {
                 fill
                 className="object-cover"
                 priority
+                unoptimized
               />
               <div className="absolute inset-0 bg-black bg-opacity-40" />
               <div className="absolute inset-0 flex items-end">
