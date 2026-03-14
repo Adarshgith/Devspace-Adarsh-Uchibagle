@@ -6,6 +6,7 @@ export default (S) =>
       .title('Website Data')
       .items([
         S.documentTypeListItem('page').title('Pages'),
+        S.documentTypeListItem('project').title('Projects'),
         S.documentTypeListItem('blogs').title('Blogs'),
         S.documentTypeListItem('events').title('Events'),
         S.documentTypeListItem('news').title('News'),

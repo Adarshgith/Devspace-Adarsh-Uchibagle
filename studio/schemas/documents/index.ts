@@ -12,6 +12,7 @@ import siteSettings from './siteSettings'
 import tags from './tags'
 import faqs from './faqs'
 import faqCategories from './faqCategories'
+import project from './project'
 
 export const documentSchemas = [
   page,
@@ -27,4 +28,5 @@ export const documentSchemas = [
   faqs,
   faqCategories,
   blockContent,
+  project,
 ]

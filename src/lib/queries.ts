@@ -361,7 +361,62 @@ export const pageBySlugQuery = groq`
     "content": mainContent,
     sections,
     heroSection,
-    mainContent,
+    mainContent {
+      rows[] {
+        ...,
+        column1[] {
+          ...,
+          projects[]-> {
+            _id,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            techStack[] {
+              name,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        },
+        column2[] {
+          ...,
+          projects[]-> {
+            _id,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            techStack[] {
+              name,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        },
+        column3[] {
+          ...,
+          projects[]-> {
+            _id,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            techStack[] {
+              name,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        }
+      }
+    },
     seo {
       ...,
       parentPage->{
@@ -628,7 +683,62 @@ export const homePageQuery = groq`
     "content": mainContent,
     sections,
     heroSection,
-    mainContent,
+    mainContent {
+      rows[] {
+        ...,
+        column1[] {
+          ...,
+          projects[]-> {
+            _id,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            techStack[] {
+              name,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        },
+        column2[] {
+          ...,
+          projects[]-> {
+            _id,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            techStack[] {
+              name,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        },
+        column3[] {
+          ...,
+          projects[]-> {
+            _id,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            techStack[] {
+              name,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        }
+      }
+    },
     seo {
       ...,
       parentPage->{
