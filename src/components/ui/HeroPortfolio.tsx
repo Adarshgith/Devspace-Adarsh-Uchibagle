@@ -140,7 +140,7 @@ export default function HeroPortfolio({
     (profileImage ? urlFor(profileImage).width(520).height(520).url() : null)
 
   return (
-    <div className="relative w-full min-h-[90vh] flex items-center">
+    <div className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
 
       {/* ── Background decorative blobs ── */}
       <div className="absolute top-[-80px] right-[-80px] w-[340px] h-[340px] rounded-full bg-purple-500 opacity-20 blur-3xl pointer-events-none" />

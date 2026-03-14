@@ -42,11 +42,13 @@ import trackRecord from './trackRecord'
 import upcomingEvents from './upcoming-events'
 import blogListing from './blogListing'
 
+
 // latest component by adarsh
 
 import heroPortfolio from './heroPortfolio'
 import aboutMe from './aboutMe'
 import experienceSection from './experienceSection'
+import projectsSection from './projectsection'
 
 
 export const objectSchemas = [
@@ -112,6 +114,7 @@ export const objectSchemas = [
   blogListing,
   heroPortfolio,
   aboutMe,
-  experienceSection
+  experienceSection,  
+  projectsSection,
 ]
 

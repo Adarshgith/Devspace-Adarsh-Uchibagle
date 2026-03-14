@@ -42,6 +42,7 @@ const createColumnBlocks = (columnNumber: number) => ({
     { type: 'heroPortfolio' },
     { type: 'aboutMe' },
     { type: 'experienceSection' },
+    { type: 'projectsSection'}
   ],
   hidden: ({ parent }: { parent?: { columns?: number, showColumn1?: boolean, showColumn2?: boolean, showColumn3?: boolean } }) => {
     if (!parent || typeof parent.columns === 'undefined') return true;
@@ -105,6 +106,7 @@ const rowSchema = {
           { value: 'backgroundImage', title: 'Background Image' },
           { value: 'hero-gradient', title: 'Hero Gradient (Indigo → Purple)' },
           { value: 'experience-gradient', title: 'Experience Gradient' },
+          { value: 'project-gradient', title: 'Project Gradient' },
         ],
       },
       initialValue: 'none',

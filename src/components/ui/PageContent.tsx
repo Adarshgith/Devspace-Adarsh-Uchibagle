@@ -10,6 +10,7 @@ import BlogListing from "./BlogListing";
 import HeroPortfolio from "./HeroPortfolio";
 import AboutMe from "./AboutMe";
 import ExperienceSection from "./ExperienceSection";
+import ProjectsSection from "./ProjectsSection";
 
 export interface fetauredProductProps {
   entityId: number;
@@ -76,14 +77,24 @@ const RenderBlock = ({ block, index }: { block: any; index: number }) => {
       };
       delete normalizedAboutMeBlock.Button;
       return <AboutMe key={index} {...normalizedAboutMeBlock} />;
-      
+
+    case "projectsSection":
+      const normalizedProjectsSectionBlock = {
+        ...block,
+        button: block.buttons,
+      };
+      delete normalizedProjectsSectionBlock.Button;
+      return <ProjectsSection key={index} {...normalizedProjectsSectionBlock} />;
+
     case "experienceSection":
       const normalizedExperienceSectionBlock = {
         ...block,
         button: block.buttons,
       };
       delete normalizedExperienceSectionBlock.Button;
-      return <ExperienceSection key={index} {...normalizedExperienceSectionBlock} />;
+      return (
+        <ExperienceSection key={index} {...normalizedExperienceSectionBlock} />
+      );
 
     case "banner":
       return <Banner key={index} {...block} />;
@@ -133,9 +144,11 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
         ? `bg-${rowTitle.replace(/\s+/g, "-").toLowerCase()}`
         : backgroundColor === "hero-gradient"
           ? "bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800"
-        : backgroundColor === "experience-gradient"
-         ? "bg-gradient-to-br from-[#0d1117] via-[#161b22] to-[#0d1117]"
-          : `bg-${backgroundColor}`
+          : backgroundColor === "experience-gradient"
+            ? "bg-gradient-to-br from-[#0d1117] via-[#161b22] to-[#0d1117]"
+          : backgroundColor === "project-gradient"
+            ? "bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364]"  
+            : `bg-${backgroundColor}`
       : "";
 
   const bannerImageUrl = getImageUrl(bannerImage);

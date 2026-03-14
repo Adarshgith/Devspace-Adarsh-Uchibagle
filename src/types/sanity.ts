@@ -363,6 +363,43 @@ export interface ExperienceSectionType {
   experiences?: ExperienceEntry[]  // Array of experience entries, latest first
 }
 
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Projects Types
+// Add these inside src/types/sanity.ts
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Tech tag inside a project
+export interface TechTag {
+  name: string
+  icon?: SanityImage              // Reuses existing SanityImage from sanity.ts
+}
+
+// Individual project document
+export interface ProjectType {
+  _id: string
+  _type: 'project'
+  name: string
+  slug: { current: string }
+  date: string                    // e.g. "FEB 2026"
+  isWIP?: boolean
+  image?: SanityImage             // Reuses existing SanityImage from sanity.ts
+  description: string             // max 150 chars
+  techStack?: TechTag[]
+  liveLink?: string
+  githubLink?: string
+  order?: number
+}
+
+// Projects Section block type
+export interface ProjectsSectionType {
+  _type: 'projectsSection'
+  heading: string                 // e.g. "PROJECTS"
+  subheading?: string
+  showAll?: boolean
+  limit?: number
+}
 // Populated interfaces (with resolved references)
 export interface PopulatedBlog extends Omit<Blog, 'blogsAuthor'> {
   blogsAuthor: BlogAuthor
