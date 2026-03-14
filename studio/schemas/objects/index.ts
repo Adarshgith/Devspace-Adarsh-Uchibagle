@@ -48,7 +48,7 @@ import blogListing from './blogListing'
 import heroPortfolio from './heroPortfolio'
 import aboutMe from './aboutMe'
 import experienceSection from './experienceSection'
-import projectsSection from './projectsection'
+import projectSection from './projectSection'
 
 
 export const objectSchemas = [
@@ -114,7 +114,7 @@ export const objectSchemas = [
   blogListing,
   heroPortfolio,
   aboutMe,
-  experienceSection,  
-  projectsSection,
+  experienceSection, 
+  projectSection,
 ]
 
