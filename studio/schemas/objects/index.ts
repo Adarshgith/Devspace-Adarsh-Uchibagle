@@ -41,7 +41,13 @@ import testimonials from './testimonals'
 import trackRecord from './trackRecord'
 import upcomingEvents from './upcoming-events'
 import blogListing from './blogListing'
+
+// latest component by adarsh
+
 import heroPortfolio from './heroPortfolio'
+import aboutMe from './aboutMe'
+import experienceSection from './experienceSection'
+
 
 export const objectSchemas = [
   // Navigation and layout
@@ -105,5 +111,7 @@ export const objectSchemas = [
 
   blogListing,
   heroPortfolio,
+  aboutMe,
+  experienceSection
 ]
 

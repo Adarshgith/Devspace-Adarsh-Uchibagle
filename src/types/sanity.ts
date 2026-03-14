@@ -312,6 +312,57 @@ export interface HeroPortfolioType {
   socialLinks?: HeroSocialLink[]    // Max 5
 }
 
+
+// ─────────────────────────────────────────────────────────────────────────────
+// About Me Types
+// Add these inside src/types/sanity.ts
+// ─────────────────────────────────────────────────────────────────────────────
+
+// About Me block type
+export interface AboutMeType {
+  _type: 'aboutMe'
+
+  // Section label & heading
+  sectionLabel?: string               // e.g. "About Me"
+  heading: string                     // e.g. "Who I Am"
+
+  // Image
+  profileImage?: SanityImage          // Reuses existing SanityImage from sanity.ts
+  profileImageAlt?: string
+
+  // Content
+  shortBio: string                    // max 300 chars
+  yearsOfExperience?: number
+  location?: string                   // e.g. "Nagpur, India"
+
+  // CTA
+  knowMoreButton?: ButtonType         // Reuses existing ButtonType from sanity.ts
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Experience Section Types
+// Add these inside src/types/sanity.ts
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Single experience entry
+export interface ExperienceEntry {
+  jobTitle: string
+  companyName: string
+  companyLogo?: SanityImage        // Reuses existing SanityImage from sanity.ts
+  employmentType?: string          // e.g. "Full Time", "Internship", "Contract"
+  startDate: string                // e.g. "Sep 2025"
+  endDate?: string                 // e.g. "Present" or "Apr 2025"
+  description?: any[]              // Portable Text blocks
+}
+
+// Experience Section block type
+export interface ExperienceSectionType {
+  _type: 'experienceSection'
+  sectionLabel?: string            // e.g. "My Journey"
+  heading: string                  // e.g. "Work Experience"
+  experiences?: ExperienceEntry[]  // Array of experience entries, latest first
+}
+
 // Populated interfaces (with resolved references)
 export interface PopulatedBlog extends Omit<Blog, 'blogsAuthor'> {
   blogsAuthor: BlogAuthor

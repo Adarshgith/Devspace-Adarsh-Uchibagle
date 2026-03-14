@@ -8,6 +8,8 @@ import InfoBox from "./InfoBox";
 import HomeFeatured from "./HomeFeatured";
 import BlogListing from "./BlogListing";
 import HeroPortfolio from "./HeroPortfolio";
+import AboutMe from "./AboutMe";
+import ExperienceSection from "./ExperienceSection";
 
 export interface fetauredProductProps {
   entityId: number;
@@ -67,6 +69,22 @@ const RenderBlock = ({ block, index }: { block: any; index: number }) => {
       delete normalizedHeroPortfolioBlock.Button;
       return <HeroPortfolio key={index} {...normalizedHeroPortfolioBlock} />;
 
+    case "aboutMe":
+      const normalizedAboutMeBlock = {
+        ...block,
+        button: block.buttons,
+      };
+      delete normalizedAboutMeBlock.Button;
+      return <AboutMe key={index} {...normalizedAboutMeBlock} />;
+      
+    case "experienceSection":
+      const normalizedExperienceSectionBlock = {
+        ...block,
+        button: block.buttons,
+      };
+      delete normalizedExperienceSectionBlock.Button;
+      return <ExperienceSection key={index} {...normalizedExperienceSectionBlock} />;
+
     case "banner":
       return <Banner key={index} {...block} />;
 
@@ -115,6 +133,8 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
         ? `bg-${rowTitle.replace(/\s+/g, "-").toLowerCase()}`
         : backgroundColor === "hero-gradient"
           ? "bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800"
+        : backgroundColor === "experience-gradient"
+         ? "bg-gradient-to-br from-[#0d1117] via-[#161b22] to-[#0d1117]"
           : `bg-${backgroundColor}`
       : "";
 
