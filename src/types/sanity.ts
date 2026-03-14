@@ -230,6 +230,8 @@ export interface ResourceItemType {
   }
 }
 
+
+
 // Button interface for button schema
 export interface ButtonType {
   _type: 'button'
@@ -264,6 +266,50 @@ export interface FAQCategory extends SanityDocument {
   title: string
   slug: Slug
   description?: string
+}
+
+
+
+
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Hero Portfolio Types
+// Add these inside src/types/sanity.ts
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Social platform options matching the Sanity schema
+export type SocialPlatform =
+  | 'github'
+  | 'linkedin'
+  | 'twitter'
+  | 'instagram'
+  | 'youtube'
+  | 'other'
+
+// Individual social link
+export interface HeroSocialLink {
+  platform: SocialPlatform
+  url: string
+  label?: string
+}
+
+// Hero Portfolio block type
+export interface HeroPortfolioType {
+  _type: 'heroPortfolio'
+
+  // Left side
+  greeting: string                  // e.g. "Hi!, I'm a"
+  name: string                      // e.g. "Software Developer"
+  description: string               // Short bio, max 300 chars
+  buttons?: ButtonType[]            // Reuses existing ButtonType from sanity.ts
+
+  // Right side
+  profileImage: SanityImage         // Reuses existing SanityImage from sanity.ts
+  profileImageAlt?: string
+
+  // Social links
+  socialLinks?: HeroSocialLink[]    // Max 5
 }
 
 // Populated interfaces (with resolved references)

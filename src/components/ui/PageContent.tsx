@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { Banner } from "./Banner";
 import InfoBox from "./InfoBox";
 import HomeFeatured from "./HomeFeatured";
+import BlogListing from "./BlogListing";
+import HeroPortfolio from "./HeroPortfolio";
 
 export interface fetauredProductProps {
   entityId: number;
@@ -34,15 +36,20 @@ export interface PageContentProps {
 
 // Individual block rendering
 const RenderBlock = ({ block, index }: { block: any; index: number }) => {
-  //console.log(`Rendering block of type: ${block._type}`, block);
   switch (block._type) {
     case "infoBox":
       const normalizedInfoBoxBlock = {
         ...block,
         button: block.button,
       };
-      // You may want to return something here if needed
       return <InfoBox key={index} {...normalizedInfoBoxBlock} />;
+
+    case "blogsListing":
+      const normalizedBlogsListingBlock = {
+        ...block,
+        button: block.button,
+      };
+      return <BlogListing key={index} {...normalizedBlogsListingBlock} />;
 
     case "homeFeatured":
       const normalizedHomeFeaturedBlock = {
@@ -51,6 +58,14 @@ const RenderBlock = ({ block, index }: { block: any; index: number }) => {
       };
       delete normalizedHomeFeaturedBlock.Button;
       return <HomeFeatured key={index} {...normalizedHomeFeaturedBlock} />;
+
+    case "heroPortfolio":
+      const normalizedHeroPortfolioBlock = {
+        ...block,
+        buttons: block.buttons,
+      };
+      delete normalizedHeroPortfolioBlock.Button;
+      return <HeroPortfolio key={index} {...normalizedHeroPortfolioBlock} />;
 
     case "banner":
       return <Banner key={index} {...block} />;
@@ -62,6 +77,7 @@ const RenderBlock = ({ block, index }: { block: any; index: number }) => {
 
 // Initialize the builder with the Sanity client
 const builder = imageUrlBuilder(client);
+
 // Helper function to generate image URLs with strict null checks
 const getImageUrl = (image?: { asset?: { _ref?: string } }): string | null => {
   return image?.asset?._ref ? builder.image(image.asset._ref).url() : null;
@@ -89,19 +105,22 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
   ];
 
   const visibleColumnsCount = columnNames.filter(
-    (column, columnIndex) => column.visible && columnIndex + 1 <= columns
+    (column, columnIndex) => column.visible && columnIndex + 1 <= columns,
   ).length;
 
-  //const backgroundClass = backgroundColor !== 'none' ? `bg-${backgroundColor}` : '';
+  // ── Single backgroundClass — handles all background types ────────
   const backgroundClass =
     backgroundColor !== "none"
       ? backgroundColor === "backgroundImage"
         ? `bg-${rowTitle.replace(/\s+/g, "-").toLowerCase()}`
-        : `bg-${backgroundColor}`
+        : backgroundColor === "hero-gradient"
+          ? "bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800"
+          : `bg-${backgroundColor}`
       : "";
+
   const bannerImageUrl = getImageUrl(bannerImage);
 
-  // Dynamically inject CSS for the pseudo-element only on screens larger than 1024px
+  // Dynamically inject CSS for background image rows
   useEffect(() => {
     if (
       bannerImageUrl &&
@@ -116,7 +135,6 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
           }
       `;
       document.head.appendChild(style);
-      // Cleanup on component unmount
       return () => {
         document.head.removeChild(style);
       };
@@ -171,12 +189,14 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
         return "bg-none";
       case "bg-whiteYellow":
         return "bg-[#e5e5e5]";
+      case "bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800":
+        return "bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800";
       default:
         return "";
     }
   };
 
-  const getSectionClasses = (sectionType: string) => {
+  const getSectionClasses = (sectionType: string): string => {
     switch (sectionType) {
       case "our-clients-section":
         return "case-studies grid grid-cols-[6fr_4fr] gap-[136px]";
@@ -191,7 +211,12 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
         return "map-section-class p-20";
       case "blog-spacing":
         return "blog-spacing-class";
-
+      case "single-page-spacing":
+        return "py-[50px] max-md:py-[30px]";
+      case "single-page-top-spacing":
+        return "pt-[100px] max-md:pt-[54px]";
+      case "single-page-bottom-spacing":
+        return "pb-[100px] max-md:pb-[54px]";
       default:
         return "";
     }
@@ -201,9 +226,16 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
   const backgroundColorClass = getBackgroundColorClass(backgroundClass);
   const sectionTypeClass = getSectionTypeClass(sectionType);
 
+  // Skip default py when these section types handle their own spacing
+  const skipDefaultPadding =
+    sectionType === "compact-row" ||
+    sectionType === "single-page-top-spacing" ||
+    sectionType === "single-page-bottom-spacing" ||
+    sectionType === "single-page-spacing" ||
+    sectionType === "hero-full";
+
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
-      // Check if the clicked element or one of its parents is an <a> with href="#top"
       const anchor = (e.target as HTMLElement).closest("a");
       if (anchor && anchor.getAttribute("href") === "#top") {
         e.preventDefault();
@@ -219,17 +251,13 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const anchor = (e.target as HTMLElement).closest("a");
-
       const href = anchor?.getAttribute("href");
       if (href && href.startsWith("#")) {
         e.preventDefault();
-
         const targetId = href.substring(1);
-
         const targetElement = targetId
           ? document.getElementById(targetId)
           : null;
-
         if (targetElement) {
           const offset = 270;
           window.scrollTo({
@@ -239,9 +267,7 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
         }
       }
     };
-
     document.addEventListener("click", handleClick);
-
     return () => {
       document.removeEventListener("click", handleClick);
     };
@@ -250,13 +276,22 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
   return (
     <section
       {...(id ? { id: id } : {})}
-      className={`py-[100px] max-md:py-[54px] ${rowType === "full" ? backgroundClass : ""} ${sectionType || ""} ${sectionTypeClass} ${backgroundColorClass}`}
+      className={`
+        ${skipDefaultPadding ? "" : "py-[100px] max-md:py-[54px]"}
+        ${rowType === "full" ? backgroundClass : ""}
+        ${sectionType || ""}
+        ${sectionTypeClass}
+        ${backgroundColorClass}
+      `}
     >
       <div
         key={index}
-        className={`mx-auto ${sectionType === "map-section" ? "" : "container"} ${sectionType === "blog-spacing" ? "!px-0" : ""}`}
+        className={`mx-auto ${
+          sectionType === "map-section" || sectionType === "hero-full"
+            ? ""
+            : "container"
+        } ${sectionType === "blog-spacing" ? "!px-0" : ""}`}
       >
-        {/* Update the class based on the number of visible columns */}
         <div className={`${columnClasses} ${getSectionClasses(sectionType)}`}>
           {columnNames.map((column, columnIndex) => {
             if (column.visible && columnIndex + 1 <= columns) {
@@ -281,17 +316,16 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
   );
 };
 
-// **Collect all distributor blocks into a single array before rendering, and apply row styles**
+// Collect all rows and render
 const PageContent = ({ rows = [] }: PageContentProps) => {
   return (
     <div className="page-content">
-      {rows.length > 0 ? ( // Only map if rows has content
+      {rows.length > 0 ? (
         rows.map((row, index) => {
-          const { rowType, rowTitle, backgroundColor } = row;
           return <RenderRow key={index} row={row} index={index} />;
         })
       ) : (
-        <p>No content available.</p> // Fallback message
+        <p>No content available.</p>
       )}
     </div>
   );

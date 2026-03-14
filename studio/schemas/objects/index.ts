@@ -40,6 +40,8 @@ import tab from './tab'
 import testimonials from './testimonals'
 import trackRecord from './trackRecord'
 import upcomingEvents from './upcoming-events'
+import blogListing from './blogListing'
+import heroPortfolio from './heroPortfolio'
 
 export const objectSchemas = [
   // Navigation and layout
@@ -98,4 +100,10 @@ export const objectSchemas = [
   seoCategory,
   advanceOptions,
   infoBanner,
+
+  //Blog Listing
+
+  blogListing,
+  heroPortfolio,
 ]
+
