@@ -40,6 +40,8 @@ const createColumnBlocks = (columnNumber: number) => ({
     { type: 'homeFeatured' },
     { type: 'blogsListing' },
     { type: 'heroPortfolio' },
+    { type: 'aboutMe' },
+    { type: 'experienceSection' },
   ],
   hidden: ({ parent }: { parent?: { columns?: number, showColumn1?: boolean, showColumn2?: boolean, showColumn3?: boolean } }) => {
     if (!parent || typeof parent.columns === 'undefined') return true;
@@ -102,6 +104,7 @@ const rowSchema = {
           { value: 'whiteYellow', title: 'White Yellow' },
           { value: 'backgroundImage', title: 'Background Image' },
           { value: 'hero-gradient', title: 'Hero Gradient (Indigo → Purple)' },
+          { value: 'experience-gradient', title: 'Experience Gradient' },
         ],
       },
       initialValue: 'none',

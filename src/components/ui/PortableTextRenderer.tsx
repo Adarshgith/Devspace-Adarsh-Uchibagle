@@ -50,7 +50,7 @@ const components: PortableTextComponents = {
 
     // Paragraphs
     normal: ({ children }) => (
-      <p className="text-gray-700 leading-relaxed mb-4">
+      <p className="text-gray-400 leading-relaxed mb-4">
         {children}
       </p>
     ),
