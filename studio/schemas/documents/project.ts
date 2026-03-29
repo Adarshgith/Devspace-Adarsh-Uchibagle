@@ -1,5 +1,5 @@
-import { defineField, defineType } from 'sanity'
-import { MdOutlineRocketLaunch } from 'react-icons/md'
+import { defineField, defineType } from 'sanity';
+import { MdOutlineRocketLaunch } from 'react-icons/md';
 
 /**
  * Project Document Schema
@@ -20,7 +20,7 @@ export default defineType({
       title: 'Project Name',
       type: 'string',
       description: 'e.g. "ENGG.SPACE"',
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
     }),
 
     defineField({
@@ -28,7 +28,7 @@ export default defineType({
       title: 'Slug',
       type: 'slug',
       options: { source: 'name', maxLength: 96 },
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
     }),
 
     defineField({
@@ -36,7 +36,7 @@ export default defineType({
       title: 'Date',
       type: 'string',
       description: 'e.g. "FEB 2026" or "AUG 2025"',
-      validation: (Rule) => Rule.required(),
+      validation: Rule => Rule.required(),
     }),
 
     defineField({
@@ -63,7 +63,16 @@ export default defineType({
       type: 'text',
       rows: 3,
       description: 'Brief description shown on the card (max 150 chars).',
-      validation: (Rule) => Rule.required().max(150),
+      validation: Rule => Rule.required().max(150),
+    }),
+
+    // ──Full Description ────────────────────────────────────────────────
+    defineField({
+      name: 'fullDescription',
+      title: 'Full Description (Rich Text)',
+      type: 'array',
+      of: [{ type: 'block' }, { type: 'image' }],
+      description: 'Complete project details shown on the single project page.',
     }),
 
     // ── Tech stack ─────────────────────────────────────────────────
@@ -82,7 +91,7 @@ export default defineType({
               title: 'Technology Name',
               type: 'string',
               description: 'e.g. "Next.js", "TypeScript", "MongoDB"',
-              validation: (Rule) => Rule.required(),
+              validation: Rule => Rule.required(),
             }),
             defineField({
               name: 'icon',
@@ -135,7 +144,7 @@ export default defineType({
         title: title || 'Project',
         subtitle: subtitle || '',
         media,
-      }
+      };
     },
   },
 
@@ -151,4 +160,4 @@ export default defineType({
       by: [{ field: 'date', direction: 'desc' }],
     },
   ],
-})
+});

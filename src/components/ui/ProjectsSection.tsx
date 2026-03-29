@@ -15,6 +15,7 @@ interface TechTag {
 
 interface Project {
   _id: string
+  slug?: { current: string }
   name: string
   date: string
   isWIP?: boolean
@@ -74,7 +75,10 @@ const ProjectCard = ({ project }: { project: Project }) => {
     (project.image ? urlFor(project.image).width(800).height(500).url() : null)
 
   return (
-    <div className="flex flex-col rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:border-gray-600 transition-all duration-300 group">
+<Link
+  href={`/projects/${project.slug?.current}`}
+  className="flex flex-col rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:border-gray-600 transition-all duration-300 group cursor-pointer"
+>
 
       {/* ── Project image ── */}
       <div className="relative w-full h-[200px] sm:h-[220px] overflow-hidden bg-gray-800 flex-shrink-0">
@@ -138,7 +142,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
                 href={project.liveLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 text-center text-gray-300 text-xs font-mono hover:text-white transition-colors duration-200 py-1"
+                className="flex-1 text-center text-gray-300 text-md font-mono hover:text-white transition-colors duration-200 py-1"
               >
                 Live link
               </Link>
@@ -162,7 +166,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           </div>
         )}
       </div>
-    </div>
+    </Link>
   )
 }
 
@@ -198,7 +202,7 @@ export default function ProjectsSection({
 
       {/* ── Projects grid ── */}
       {projects.length > 0 && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
         {projects.map((project, index) => (
         <ProjectCard key={project._id || index} project={project} />
         ))}

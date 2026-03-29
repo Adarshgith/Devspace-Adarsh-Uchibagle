@@ -11,6 +11,7 @@ import HeroPortfolio from "./HeroPortfolio";
 import AboutMe from "./AboutMe";
 import ExperienceSection from "./ExperienceSection";
 import ProjectsSection from "./ProjectsSection";
+import PortableTextRenderer from "./PortableTextRenderer";
 
 export interface fetauredProductProps {
   entityId: number;
@@ -24,7 +25,6 @@ export interface fetauredProductProps {
   };
 }
 
-// Interface for the content block
 export interface PageContentProps {
   rows: any[];
   breadcrumb?: {
@@ -37,7 +37,6 @@ export interface PageContentProps {
   };
 }
 
-// Individual block rendering
 const RenderBlock = ({ block, index }: { block: any; index: number }) => {
   switch (block._type) {
     case "infoBox":
@@ -46,6 +45,16 @@ const RenderBlock = ({ block, index }: { block: any; index: number }) => {
         button: block.button,
       };
       return <InfoBox key={index} {...normalizedInfoBoxBlock} />;
+
+    case "richText":
+      return (
+        <div
+          key={index}
+          className={`rich-text-block ${block.width === "full" ? "w-full" : "max-w-4xl mx-auto"} text-${block.align || "left"}`}
+        >
+          <PortableTextRenderer content={block.content} />
+        </div>
+      );
 
     case "blogsListing":
       const normalizedBlogsListingBlock = {
@@ -104,10 +113,8 @@ const RenderBlock = ({ block, index }: { block: any; index: number }) => {
   }
 };
 
-// Initialize the builder with the Sanity client
 const builder = imageUrlBuilder(client);
 
-// Helper function to generate image URLs with strict null checks
 const getImageUrl = (image?: { asset?: { _ref?: string } }): string | null => {
   return image?.asset?._ref ? builder.image(image.asset._ref).url() : null;
 };
@@ -143,17 +150,16 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
       ? backgroundColor === "backgroundImage"
         ? `bg-${rowTitle.replace(/\s+/g, "-").toLowerCase()}`
         : backgroundColor === "hero-gradient"
-          ? "bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800"
+          ? "bg-gradient-to-b from-[#1a0f35] via-[#110d25] to-[#0d0a1a]"
           : backgroundColor === "experience-gradient"
             ? "bg-gradient-to-br from-[#0d1117] via-[#161b22] to-[#0d1117]"
-          : backgroundColor === "project-gradient"
-            ? "bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364]"  
-            : `bg-${backgroundColor}`
+            : backgroundColor === "project-gradient"
+              ? "bg-gradient-to-br from-[#0f2027] via-[#203a43] to-[#2c5364]"
+              : `bg-${backgroundColor}`
       : "";
 
   const bannerImageUrl = getImageUrl(bannerImage);
 
-  // Dynamically inject CSS for background image rows
   useEffect(() => {
     if (
       bannerImageUrl &&
@@ -176,30 +182,18 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
 
   const getColumnWidth = (columnWidth: string): string => {
     switch (columnWidth) {
-      case "1fr_11fr":
-        return "grid-cols-[1fr_11fr]";
-      case "2fr_10fr":
-        return "grid-cols-[2fr_10fr]";
-      case "3fr_9fr":
-        return "grid-cols-[3fr_9fr]";
-      case "4fr_8fr":
-        return "grid-cols-[4fr_8fr]";
-      case "5fr_7fr":
-        return "grid-cols-[5fr_7fr]";
-      case "6fr_6fr":
-        return "grid-cols-[6fr_6fr]";
-      case "7fr_5fr":
-        return "grid-cols-[7fr_5fr]";
-      case "8fr_4fr":
-        return "grid-cols-[8fr_4fr]";
-      case "9fr_3fr":
-        return "grid-cols-[9fr_3fr]";
-      case "10fr_2fr":
-        return "grid-cols-[10fr_2fr]";
-      case "11fr_1fr":
-        return "grid-cols-[11fr_1fr]";
-      default:
-        return "grid-cols-2";
+      case "1fr_11fr": return "grid-cols-[1fr_11fr]";
+      case "2fr_10fr": return "grid-cols-[2fr_10fr]";
+      case "3fr_9fr":  return "grid-cols-[3fr_9fr]";
+      case "4fr_8fr":  return "grid-cols-[4fr_8fr]";
+      case "5fr_7fr":  return "grid-cols-[5fr_7fr]";
+      case "6fr_6fr":  return "grid-cols-[6fr_6fr]";
+      case "7fr_5fr":  return "grid-cols-[7fr_5fr]";
+      case "8fr_4fr":  return "grid-cols-[8fr_4fr]";
+      case "9fr_3fr":  return "grid-cols-[9fr_3fr]";
+      case "10fr_2fr": return "grid-cols-[10fr_2fr]";
+      case "11fr_1fr": return "grid-cols-[11fr_1fr]";
+      default:         return "grid-cols-2";
     }
   };
 
@@ -218,14 +212,11 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
 
   const getBackgroundColorClass = (backgroundClass: string): string => {
     switch (backgroundClass) {
-      case "bg-none":
-        return "bg-none";
-      case "bg-whiteYellow":
-        return "bg-[#e5e5e5]";
+      case "bg-none":       return "bg-none";
+      case "bg-whiteYellow": return "bg-[#e5e5e5]";
       case "bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800":
         return "bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-800";
-      default:
-        return "";
+      default: return "";
     }
   };
 
@@ -240,18 +231,12 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
 
   const getSectionTypeClass = (sectionType: string): string => {
     switch (sectionType) {
-      case "map-section":
-        return "map-section-class p-20";
-      case "blog-spacing":
-        return "blog-spacing-class";
-      case "single-page-spacing":
-        return "py-[50px] max-md:py-[30px]";
-      case "single-page-top-spacing":
-        return "pt-[100px] max-md:pt-[54px]";
-      case "single-page-bottom-spacing":
-        return "pb-[100px] max-md:pb-[54px]";
-      default:
-        return "";
+      case "map-section":                return "map-section-class p-20";
+      case "blog-spacing":               return "blog-spacing-class";
+      case "single-page-spacing":        return "py-[50px] max-md:py-[30px]";
+      case "single-page-top-spacing":    return "pt-[100px] max-md:pt-[54px]";
+      case "single-page-bottom-spacing": return "pb-[100px] max-md:pb-[54px]";
+      default:                           return "";
     }
   };
 
@@ -259,7 +244,6 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
   const backgroundColorClass = getBackgroundColorClass(backgroundClass);
   const sectionTypeClass = getSectionTypeClass(sectionType);
 
-  // Skip default py when these section types handle their own spacing
   const skipDefaultPadding =
     sectionType === "compact-row" ||
     sectionType === "single-page-top-spacing" ||
@@ -276,9 +260,7 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
       }
     };
     document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
+    return () => { document.removeEventListener("click", handleClick); };
   }, []);
 
   useEffect(() => {
@@ -288,28 +270,22 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
       if (href && href.startsWith("#")) {
         e.preventDefault();
         const targetId = href.substring(1);
-        const targetElement = targetId
-          ? document.getElementById(targetId)
-          : null;
+        const targetElement = targetId ? document.getElementById(targetId) : null;
         if (targetElement) {
           const offset = 270;
-          window.scrollTo({
-            top: targetElement.offsetTop + offset,
-            behavior: "smooth",
-          });
+          window.scrollTo({ top: targetElement.offsetTop + offset, behavior: "smooth" });
         }
       }
     };
     document.addEventListener("click", handleClick);
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
+    return () => { document.removeEventListener("click", handleClick); };
   }, []);
 
   return (
     <section
       {...(id ? { id: id } : {})}
       className={`
+        relative
         ${skipDefaultPadding ? "" : "py-[100px] max-md:py-[54px]"}
         ${rowType === "full" ? backgroundClass : ""}
         ${sectionType || ""}
@@ -317,9 +293,28 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
         ${backgroundColorClass}
       `}
     >
+      {/* ── Hero gradient decorative elements — full width ── */}
+      {backgroundColor === "hero-gradient" && (
+        <>
+          <div className="absolute top-0 right-0 w-[340px] h-[340px] rounded-full bg-purple-500 opacity-20 blur-3xl pointer-events-none translate-x-1/2 -translate-y-1/2 z-0" />
+          <div className="absolute bottom-0 left-0 w-[260px] h-[260px] rounded-full bg-indigo-400 opacity-20 blur-3xl pointer-events-none -translate-x-1/2 translate-y-1/2 z-0" />
+          <div className="absolute top-8 right-8 pointer-events-none z-0 grid grid-cols-6 gap-[6px]">
+            {Array.from({ length: 36 }).map((_, i) => (
+              <span key={i} className="w-[5px] h-[5px] rounded-full bg-white opacity-20" />
+            ))}
+          </div>
+          <div className="absolute bottom-8 left-8 pointer-events-none z-0 grid grid-cols-6 gap-[6px]">
+            {Array.from({ length: 36 }).map((_, i) => (
+              <span key={i} className="w-[5px] h-[5px] rounded-full bg-white opacity-20" />
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* ── Content container ── */}
       <div
         key={index}
-        className={`mx-auto ${
+        className={`relative z-10 mx-auto ${
           sectionType === "map-section" || sectionType === "hero-full"
             ? ""
             : "container"
@@ -349,7 +344,6 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
   );
 };
 
-// Collect all rows and render
 const PageContent = ({ rows = [] }: PageContentProps) => {
   return (
     <div className="page-content">

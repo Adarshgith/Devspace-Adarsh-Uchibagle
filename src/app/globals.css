@@ -8,6 +8,17 @@
   --font-mono: var(--font-geist-mono);
 }
 
+:root {
+  --color-dark-base: #0d0a1a;  /* dark violet, almost black */
+}
+
+html,
+body,
+#__next,
+main {
+  background-color: #0d0a1a !important;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

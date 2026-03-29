@@ -31,7 +31,7 @@ interface CustomPageProps {
 export async function generateMetadata({ params }: CustomPageProps): Promise<Metadata> {
   const resolvedParams = await params
   const slug = resolvedParams.slug ? resolvedParams.slug.join('/') : ''
-
+  
   // Handle root route - fetch home page from Sanity
   let page: HierarchicalPage | null = null
 
@@ -260,7 +260,7 @@ export default async function CustomPage({ params }: CustomPageProps) {
         }}
       />
 
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen">
         <div className="relative bg-white">
           {/* {page.featuredImage && (
             <div className="relative h-96 lg:h-[500px] overflow-hidden">
@@ -391,7 +391,7 @@ export default async function CustomPage({ params }: CustomPageProps) {
 // Loading component
 export function CustomPageSkeleton() {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       {/* Hero Skeleton */}
       <div className="bg-gradient-to-r from-blue-600 to-blue-800 py-16">
         <div className="container mx-auto px-4">

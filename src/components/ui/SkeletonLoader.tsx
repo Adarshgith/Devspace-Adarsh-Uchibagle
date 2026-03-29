@@ -126,7 +126,7 @@ const ContentCardSkeleton = React.memo<ContentCardSkeletonProps>(({
         
         {/* Author Skeleton (for featured blog posts) */}
         {featured && showAuthor && (
-          <div className="flex items-center space-x-3 mb-4 p-4 bg-gray-50 rounded-lg">
+          <div className="flex items-center space-x-3 mb-4 p-4 rounded-lg">
             <Skeleton className="w-12 h-12" variant="circular" />
             <div className="flex-1">
               <Skeleton className="w-32 h-4 mb-1" variant="text" />
