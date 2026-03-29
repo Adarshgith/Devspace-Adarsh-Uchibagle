@@ -33,7 +33,7 @@ interface HeroPortfolioProps {
   socialLinks?: SocialLink[]
 }
 
-// ── Social Icons (inline SVG — zero extra deps) ───────────────────────────────
+// ── Social Icons ──────────────────────────────────────────────────────────────
 
 const SocialIcon = ({ platform }: { platform: string }) => {
   const cls = 'w-5 h-5'
@@ -109,19 +109,6 @@ const HeroButton = ({ text, url, openInNewTab, style }: ButtonType) => {
   return <button className={className}>{text}</button>
 }
 
-// ── Decorative dot-grid (matches Figma reference) ────────────────────────────
-
-const DotGrid = ({ className }: { className?: string }) => (
-  <div className={`grid grid-cols-6 gap-[6px] ${className ?? ''}`}>
-    {Array.from({ length: 36 }).map((_, i) => (
-      <span
-        key={i}
-        className="w-[5px] h-[5px] rounded-full bg-white opacity-40"
-      />
-    ))}
-  </div>
-)
-
 // ── Main component ────────────────────────────────────────────────────────────
 
 export default function HeroPortfolio({
@@ -134,7 +121,6 @@ export default function HeroPortfolio({
   socialLinks = [],
 }: HeroPortfolioProps) {
 
-  // Resolve image URL — prefer direct asset.url, fall back to urlFor
   const imageUrl =
     profileImage?.asset?.url ||
     (profileImage ? urlFor(profileImage).width(520).height(520).url() : null)
@@ -142,16 +128,12 @@ export default function HeroPortfolio({
   return (
     <div className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
 
-      {/* ── Background decorative blobs ── */}
-      <div className="absolute top-[-80px] right-[-80px] w-[340px] h-[340px] rounded-full bg-purple-500 opacity-20 blur-3xl pointer-events-none" />
-      <div className="absolute bottom-[-60px] left-[-60px] w-[260px] h-[260px] rounded-full bg-indigo-400 opacity-20 blur-3xl pointer-events-none" />
-
       {/* ── Content container ── */}
-      <div className="container mx-auto px-6 lg:px-16 py-20 relative z-10">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-14">
+      <div className="container mx-auto px-6 lg:px-16 py-20 relative z-10 w-full">
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-between gap-4">
 
-          {/* ── LEFT — Text content ─────────────────────────────── */}
-          <div className="flex-1 text-white text-center lg:text-left max-w-xl">
+          {/* ── LEFT — Text content ── */}
+          <div className="flex-1 max-w-[680px] text-white text-center lg:text-left">
 
             {/* Greeting */}
             <p className="text-indigo-200 text-lg font-medium mb-2 tracking-wide">
@@ -165,7 +147,7 @@ export default function HeroPortfolio({
 
             {/* Description */}
             {description && (
-              <p className="text-indigo-100 text-base md:text-lg leading-relaxed mb-10 max-w-md mx-auto lg:mx-0">
+              <p className="text-indigo-100 text-base md:text-lg leading-relaxed mb-10">
                 {description}
               </p>
             )}
@@ -202,32 +184,22 @@ export default function HeroPortfolio({
             )}
           </div>
 
-          {/* ── RIGHT — Profile image ───────────────────────────── */}
-          <div className="relative flex-shrink-0 flex items-center justify-center">
-
-            {/* Dot grid — top right (decorative, from Figma) */}
-            <DotGrid className="absolute -top-6 -right-6 z-0" />
-
-            {/* Dot grid — bottom left (decorative, from Figma) */}
-            <DotGrid className="absolute -bottom-6 -left-6 z-0" />
-
-            {/* Outer glow ring */}
-            <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-purple-400 to-indigo-300 opacity-30 blur-2xl scale-110 pointer-events-none" />
+          {/* ── RIGHT — Profile image ── */}
+          <div className="relative flex-shrink-0 flex items-center justify-center w-[280px] md:w-[340px] lg:w-[420px]">
 
             {/* Image container */}
-            <div className="relative z-10 w-[280px] h-[280px] md:w-[360px] md:h-[360px] lg:w-[420px] lg:h-[420px] rounded-full overflow-hidden border-4 border-white/30 shadow-2xl">
+            <div className="relative z-10 w-full aspect-square rounded-2xl overflow-hidden border-4 border-white/30 shadow-2xl">
               {imageUrl ? (
                 <Image
                   src={imageUrl}
                   alt={profileImageAlt}
                   fill
                   className="object-cover object-center"
-                  sizes="(max-width: 768px) 280px, (max-width: 1024px) 360px, 420px"
+                  sizes="(max-width: 768px) 280px, (max-width: 1024px) 340px, 420px"
                   priority
                   unoptimized
                 />
               ) : (
-                /* Placeholder when no image is set */
                 <div className="w-full h-full bg-indigo-500/40 flex flex-col items-center justify-center gap-3">
                   <svg className="w-20 h-20 text-white/50" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
@@ -237,7 +209,6 @@ export default function HeroPortfolio({
               )}
             </div>
           </div>
-          {/* ── END RIGHT ── */}
 
         </div>
       </div>

@@ -34,12 +34,13 @@ const SANITY_STUDIO_API_DATASET = envVars.SANITY_STUDIO_API_DATASET || 'producti
 
 export default defineConfig({
   name: 'default',
-  title: 'Competition Studio',
+  title: 'Adarsh Uchibagle Portfolio',
 
   projectId: SANITY_STUDIO_PROJECT_ID,
   dataset: SANITY_STUDIO_API_DATASET,
 
   plugins: [
+    visionTool(), // ← ye hona chahiye
     structureTool({
       structure: deskStructure,
     }),
