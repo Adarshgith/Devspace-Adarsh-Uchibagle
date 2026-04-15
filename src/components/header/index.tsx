@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 
 // Sanity menu
-import GlobalSearch from '@/components/ui/GlobalSearch';
 import { headerQuery, siteSettingsQuery } from '@/lib/queries';
 import { client } from '@/lib/sanity';
 import Image from 'next/image';
@@ -129,20 +128,7 @@ export const Header = async () => {
   return (
     <>
       <nav className='z-1 max-lg:relative bg-white border-b border-primary-gray-light shadow-[0px_4px_10px_0px_rgba(0,0,0,0.05)]'>
-      <section className="top-section bg-black">
-        <div className='top-nav container flex items-center justify-between text-white bg-primary-dark w-auto relative max-md:w-full max-2xl-laptop:pr-[20px] max-lg:pr-[15px] max-md:pr-[15px] py-2 text-xxs max-md:leading-5 max-md:py-[5px] max-md:min-h-[30px]'>
-          <div className='max-md:hidden'>
-            <p> TEL: <Link href={`tel:${siteSettings.phone}`} className="hover:underline focus:ring-white text-xxs outline-none">{siteSettings.phone}</Link></p>
-          </div>
-          <div className="w-64">
-            <GlobalSearch
-              placeholder="Search..."
-              className="w-full"
-              showFilters={false}
-            />
-          </div>
-        </div>
-      </section>
+      {/* top navbar removed */}
       <section className='lg:hidden border-b border-brand-dark-20 py-[22px] max-md:py-[15px]'>
         <div className='container grid grid-cols-[27%_44%_29%] max-xl:grid-cols-[27%_41%_32%] items-center max-lg:grid-cols-[50%_50%] max-lg:gap-y-4'>
           <div className='w-full flex items-center justify-between max-[480px]:max-w-[175px]'>

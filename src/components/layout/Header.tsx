@@ -7,7 +7,6 @@ import { Menu, X, ChevronDown, Search } from 'lucide-react'
 import { SiteSettings } from '@/types/sanity'
 import { urlFor } from '@/lib/sanity'
 import { cn } from '@/lib/utils'
-import GlobalSearch, { SearchModal } from '@/components/ui/GlobalSearch'
 
 interface HeaderProps {
   siteSettings: SiteSettings | null
@@ -59,7 +58,6 @@ export default function Header({ siteSettings }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false)
   const [isClient, setIsClient] = useState(false)
 
   // Handle client-side hydration
@@ -198,35 +196,16 @@ export default function Header({ siteSettings }: HeaderProps) {
 
           {/* Search and CTA */}
           <div className="hidden lg:flex items-center space-x-4">
-            {/* Desktop Search */}
-            <div className="w-64">
-              <GlobalSearch 
-                placeholder="Search..."
-                className="w-full"
-                showFilters={false}
-              />
-            </div>
-            
             <Link
               href="/contact"
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
             >
               Get Started
-              
             </Link>
           </div>
 
           {/* Mobile Actions */}
           <div className="lg:hidden flex items-center space-x-2">
-            {/* Mobile Search Button */}
-            <button
-              className="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-colors duration-200"
-              onClick={() => setIsSearchModalOpen(true)}
-              aria-label="Open search"
-            >
-              <Search className="w-5 h-5" />
-            </button>
-            
             {/* Mobile Menu Button */}
             <button
               className="mobile-menu-button p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 transition-colors duration-200"
@@ -316,11 +295,7 @@ export default function Header({ siteSettings }: HeaderProps) {
         </div>
       </div>
       
-      {/* Mobile Search Modal */}
-      <SearchModal 
-        isOpen={isSearchModalOpen} 
-        onClose={() => setIsSearchModalOpen(false)} 
-      />
+      {/* Mobile Search removed */}
     </header>
   )
 }

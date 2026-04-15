@@ -700,91 +700,96 @@ export const getSitemapQuery = groq`
 `
 
   // Home Page Query
-  export const homePageQuery = groq`
-    *[_type == "page" && slug.current == "home"][0] {
-      _id,
-      title,
-      slug,
-      excerpt,
-      "featuredImage": heroSection.backgroundImage,
-      "content": mainContent,
-      sections,
-      heroSection,
-      mainContent {
-        rows[] {
+export const homePageQuery = groq`
+  *[_type == "page" && slug.current == "home"][0] {
+    _id,
+    title,
+    slug,
+    excerpt,
+    "featuredImage": heroSection.backgroundImage,
+    sections,
+    heroSection,
+    mainContent {
+      rows[] {
+        ...,
+        column1[] {
           ...,
-          column1[] {
-            ...,
-            projects[]-> {
-              _id,
-              slug,
+          techTags,
+          resumeUrl { asset-> { _id, url } },
+          projects[]-> {
+            _id,
+            slug,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            fullDescription,
+            techStack[] {
               name,
-              date,
-              isWIP,
-              image { asset-> { _id, url } },
-              description,
-              fullDescription,
-              techStack[] {
-                name,
-                icon { asset-> { _id, url } }
-              },
-              liveLink,
-              githubLink
-            }
-          },
-          column2[] {
-            ...,
-            projects[]-> {
-              _id,
-              slug,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        },
+        column2[] {
+          ...,
+          techTags,
+          resumeUrl { asset-> { _id, url } },
+          projects[]-> {
+            _id,
+            slug,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            fullDescription,
+            techStack[] {
               name,
-              date,
-              isWIP,
-              image { asset-> { _id, url } },
-              description,
-              fullDescription,
-              techStack[] {
-                name,
-                icon { asset-> { _id, url } }
-              },
-              liveLink,
-              githubLink
-            }
-          },
-          column3[] {
-            ...,
-            projects[]-> {
-              _id,
-              slug,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        },
+        column3[] {
+          ...,
+          techTags,
+          resumeUrl { asset-> { _id, url } },
+          projects[]-> {
+            _id,
+            slug,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            fullDescription,
+            techStack[] {
               name,
-              date,
-              isWIP,
-              image { asset-> { _id, url } },
-              description,
-              fullDescription,
-              techStack[] {
-                name,
-                icon { asset-> { _id, url } }
-              },
-              liveLink,
-              githubLink
-            }
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
           }
         }
-      },
-      seo {
-        ...,
-        parentPage->{
-          _id,
-          title,
-          slug
-        }
-      },
-      showSocialShare,
-      noIndex,
-      include_in_sitemap
-    }
-  `
+      }
+    },
+    seo {
+      ...,
+      parentPage->{
+        _id,
+        title,
+        slug
+      }
+    },
+    showSocialShare,
+    noIndex,
+    include_in_sitemap
+  }
+`
 
 // Hierarchical Page Queries
 export const pageWithHierarchyQuery = groq`

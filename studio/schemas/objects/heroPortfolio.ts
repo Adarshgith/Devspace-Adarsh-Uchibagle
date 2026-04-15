@@ -1,11 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { RiUserStarLine } from 'react-icons/ri'
 
-/**
- * Hero Portfolio Section Schema
- * _type: 'heroPortfolio'
- * Used as an embedded block inside a page row via PageContent / RenderBlock.
- */
 export default defineType({
   name: 'heroPortfolio',
   title: 'Hero — Portfolio',
@@ -13,58 +8,85 @@ export default defineType({
   icon: RiUserStarLine,
 
   fields: [
-    // ── Left side ─────────────────────────────────────────────────
+    // ── Availability badge ─────────────────────────────────────────
+    defineField({
+      name: 'availableForWork',
+      title: 'Available for Work?',
+      type: 'boolean',
+      description: 'Show "Available for opportunities" badge.',
+      initialValue: true,
+    }),
+
+    // ── Main content ───────────────────────────────────────────────
     defineField({
       name: 'greeting',
-      title: 'Greeting Text',
+      title: 'Role / Sub-title',
       type: 'string',
-      description: "Small label above your name, e.g. \"Hi!, I'm a\"",
-      initialValue: "Hi!, I'm a",
+      description: 'Shown below your name, e.g. "Full Stack Developer"',
+      initialValue: 'Full Stack Developer',
       validation: (Rule) => Rule.required(),
     }),
 
     defineField({
       name: 'name',
-      title: 'Name / Title',
+      title: 'Name',
       type: 'string',
-      description: 'Your name or role, e.g. "Software Developer"',
+      description: 'Your full name',
       validation: (Rule) => Rule.required(),
     }),
 
     defineField({
       name: 'description',
-      title: 'Short Bio / Description',
-      type: 'text',
-      rows: 4,
-      description: 'A short paragraph about yourself shown below your title.',
-      validation: (Rule) => Rule.required().max(300),
+      title: 'Professional Summary',
+      type: 'array',
+      description: 'Short professional summary shown in hero.',
+      of: [{ type: 'block' }],
+    }),
+
+    // ── Stats ──────────────────────────────────────────────────────
+    defineField({
+      name: 'yearsOfExperience',
+      title: 'Years of Experience',
+      type: 'number',
+      description: 'e.g. 3',
+      initialValue: 3,
+    }),
+
+    defineField({
+      name: 'projectsCount',
+      title: 'Projects Count',
+      type: 'number',
+      description: 'e.g. 15',
+      initialValue: 15,
+    }),
+
+    // ── Tech tags ──────────────────────────────────────────────────
+    defineField({
+      name: 'techTags',
+      title: 'Tech Stack Tags',
+      type: 'array',
+      description: 'e.g. Next.js, TypeScript, React',
+      of: [{ type: 'string' }],
+    }),
+
+    // ── Resume ─────────────────────────────────────────────────────
+    defineField({
+      name: 'resumeUrl',
+      title: 'Resume / CV URL',
+      type: 'file',
+      description: 'Upload your resume PDF directly.',
+      options: {
+        accept: '.pdf,.doc,.docx'
+      },
     }),
 
     defineField({
       name: 'buttons',
       title: 'CTA Buttons',
       type: 'array',
-      description: 'Add up to 2 call-to-action buttons.',
+      description: 'Add up to 2 call-to-action buttons (e.g. Get in Touch).',
       of: [{ type: 'button' }],
       validation: (Rule) => Rule.max(2).error('Only 2 buttons are allowed.'),
-    }),
-
-    // ── Right side — Profile image ─────────────────────────────────
-    defineField({
-      name: 'profileImage',
-      title: 'Profile Image',
-      type: 'image',
-      description: 'Your profile photo. Recommended: square, min 600×600px.',
-      options: { hotspot: true },
-      validation: (Rule) => Rule.required(),
-    }),
-
-    defineField({
-      name: 'profileImageAlt',
-      title: 'Profile Image Alt Text',
-      type: 'string',
-      description: 'Accessible description, e.g. "John Doe smiling".',
-      initialValue: 'Profile photo',
     }),
 
     // ── Social links ───────────────────────────────────────────────
@@ -72,7 +94,7 @@ export default defineType({
       name: 'socialLinks',
       title: 'Social Media Links',
       type: 'array',
-      description: 'Optional social icons shown in the hero (max 5).',
+      description: 'Social icons shown in the hero (max 5).',
       of: [
         {
           type: 'object',
@@ -104,7 +126,6 @@ export default defineType({
               name: 'label',
               title: 'Label (accessibility)',
               type: 'string',
-              description: 'Screen reader label, e.g. "Visit my GitHub profile".',
             }),
           ],
           preview: {
@@ -120,13 +141,11 @@ export default defineType({
     select: {
       title: 'name',
       subtitle: 'greeting',
-      media: 'profileImage',
     },
-    prepare({ title, subtitle, media }) {
+    prepare({ title, subtitle }) {
       return {
         title: title || 'Hero Section',
         subtitle: subtitle || 'Portfolio hero',
-        media,
       }
     },
   },
