@@ -285,7 +285,7 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
     <section
       {...(id ? { id: id } : {})}
       className={`
-        relative
+        relative overflow-hidden
         ${skipDefaultPadding ? "" : "py-[100px] max-md:py-[54px]"}
         ${rowType === "full" ? backgroundClass : ""}
         ${sectionType || ""}

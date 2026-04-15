@@ -68,6 +68,8 @@ const TechBadge = ({ tag }: { tag: TechTag }) => {
 }
 
 // ── Project Card ──────────────────────────────────────────────────────────────
+// Fix: outer wrapper is <div> not <Link> to avoid nested <a> hydration error
+// Only project name is clickable as <Link>
 
 const ProjectCard = ({ project }: { project: Project }) => {
   const imageUrl =
@@ -75,13 +77,13 @@ const ProjectCard = ({ project }: { project: Project }) => {
     (project.image ? urlFor(project.image).width(800).height(500).url() : null)
 
   return (
-<Link
-  href={`/projects/${project.slug?.current}`}
-  className="flex flex-col rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:border-gray-600 transition-all duration-300 group cursor-pointer"
->
+    <div className="flex flex-col rounded-2xl overflow-hidden border border-gray-800 bg-gray-900/50 hover:border-gray-600 transition-all duration-300 group">
 
-      {/* ── Project image ── */}
-      <div className="relative w-full h-[200px] sm:h-[220px] overflow-hidden bg-gray-800 flex-shrink-0">
+      {/* ── Project image — clicking navigates to project page ── */}
+      <Link
+        href={`/projects/${project.slug?.current}`}
+        className="relative w-full h-[200px] sm:h-[220px] overflow-hidden bg-gray-800 flex-shrink-0 block"
+      >
         {imageUrl ? (
           <Image
             src={imageUrl}
@@ -98,7 +100,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
             </svg>
           </div>
         )}
-      </div>
+      </Link>
 
       {/* ── Card content ── */}
       <div className="flex flex-col flex-1 p-5">
@@ -106,9 +108,15 @@ const ProjectCard = ({ project }: { project: Project }) => {
         {/* Name + WIP + date row */}
         <div className="flex items-start justify-between gap-3 mb-3">
           <div className="flex items-center gap-2 flex-wrap">
-            <h3 className="text-white font-bold !text-xl sm:text-base tracking-widest uppercase font-mono">
-              {project.name}
-            </h3>
+            {/* Project name — clickable link to detail page */}
+            <Link
+              href={`/projects/${project.slug?.current}`}
+              className="hover:text-indigo-400 transition-colors duration-200"
+            >
+              <h3 className="text-white font-bold text-xl sm:text-base tracking-widest uppercase font-mono">
+                {project.name}
+              </h3>
+            </Link>
             {project.isWIP && (
               <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-gray-700 text-gray-300 border border-gray-600 tracking-widest">
                 WIP
@@ -121,7 +129,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
         </div>
 
         {/* Description */}
-        <p className="text-gray-400 !text-lg sm:text-sm font-mono leading-relaxed mb-4 flex-1">
+        <p className="text-gray-400 text-lg sm:text-sm font-mono leading-relaxed mb-4 flex-1 whitespace-pre-line">
           {project.description}
         </p>
 
@@ -134,7 +142,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           </div>
         )}
 
-        {/* Links */}
+        {/* Links — these are now safe since outer is <div> not <a> */}
         {(project.liveLink || project.githubLink) && (
           <div className="flex items-center gap-4 pt-4 border-t border-gray-800">
             {project.liveLink && (
@@ -166,7 +174,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
           </div>
         )}
       </div>
-    </Link>
+    </div>
   )
 }
 
@@ -177,6 +185,12 @@ export default function ProjectsSection({
   subheading,
   projects = [],
 }: ProjectsSectionProps) {
+
+  // Fix: remove duplicate projects by _id before rendering
+  const uniqueProjects = projects.filter(
+    (project, index, self) =>
+      index === self.findIndex((p) => p._id === project._id)
+  )
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -196,18 +210,18 @@ export default function ProjectsSection({
       </div>
 
       {/* ── Empty state ── */}
-      {projects.length === 0 && (
+      {uniqueProjects.length === 0 && (
         <p className="text-gray-500 font-mono text-sm">No projects added yet.</p>
       )}
 
       {/* ── Projects grid ── */}
-      {projects.length > 0 && (
+      {uniqueProjects.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
-        {projects.map((project, index) => (
-        <ProjectCard key={project._id || index} project={project} />
-        ))}
+          {uniqueProjects.map((project) => (
+            <ProjectCard key={project._id} project={project} />
+          ))}
         </div>
       )}
     </div>
   )
-}   
+}
