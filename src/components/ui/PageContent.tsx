@@ -11,6 +11,7 @@ import HeroPortfolio from "./HeroPortfolio";
 import AboutMe from "./AboutMe";
 import ExperienceSection from "./ExperienceSection";
 import ProjectsSection from "./ProjectsSection";
+import SkillsSection from "./SkillsSection";
 import PortableTextRenderer from "./PortableTextRenderer";
 
 export interface fetauredProductProps {
@@ -104,6 +105,11 @@ const RenderBlock = ({ block, index }: { block: any; index: number }) => {
       return (
         <ExperienceSection key={index} {...normalizedExperienceSectionBlock} />
       );
+
+    case "skillsSection":
+      const normalizedSkillsSectionBlock = { ...block };
+      delete normalizedSkillsSectionBlock.Button;
+      return <SkillsSection key={index} {...normalizedSkillsSectionBlock} />;
 
     case "banner":
       return <Banner key={index} {...block} />;
@@ -236,6 +242,7 @@ const RenderRow = ({ row, index }: { row: any; index: number }) => {
       case "single-page-spacing":        return "py-[50px] max-md:py-[30px]";
       case "single-page-top-spacing":    return "pt-[100px] max-md:pt-[54px]";
       case "single-page-bottom-spacing": return "pb-[100px] max-md:pb-[54px]";
+      case "compact-row":               return "py-0";
       default:                           return "";
     }
   };
