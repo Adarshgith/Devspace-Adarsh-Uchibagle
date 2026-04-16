@@ -364,6 +364,31 @@ export interface ExperienceSectionType {
 }
 
 
+// ─────────────────────────────────────────────────────────────────────────────
+// Skills Section Types
+// Add these inside src/types/sanity.ts
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface Skill {
+  name: string
+  logo?: SanityImage
+  proficiency?: 'expert' | 'proficient' | 'familiar'
+}
+
+export interface SkillCategory {
+  categoryName: string
+  categoryIcon?: string
+  skills?: Skill[]
+}
+
+export interface SkillsSectionType {
+  _type: 'skillsSection'
+  sectionTitle?: string
+  sectionSubtitle?: string
+  categories?: SkillCategory[]
+}
+
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Projects Types

@@ -42,7 +42,8 @@ const createColumnBlocks = (columnNumber: number) => ({
     { type: 'heroPortfolio' },
     { type: 'aboutMe' },
     { type: 'experienceSection' },
-    { type: 'projectsSection'}
+    { type: 'projectsSection'},
+    { type: 'skillsSection' },
   ],
   hidden: ({ parent }: { parent?: { columns?: number, showColumn1?: boolean, showColumn2?: boolean, showColumn3?: boolean } }) => {
     if (!parent || typeof parent.columns === 'undefined') return true;
