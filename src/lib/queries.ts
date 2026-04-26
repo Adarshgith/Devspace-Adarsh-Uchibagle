@@ -34,6 +34,9 @@ export const siteSettingsQuery = groq`
     twitterLink,
     facebookLink,
     instagramLink,
+    githubLink,
+    youtubeLink,
+    footerTagline,
     privacyLinks,
     announcementBannerActive,
     announcementBannerText,
@@ -802,7 +805,74 @@ export const pageWithHierarchyQuery = groq`
     "content": mainContent,
     sections,
     heroSection,
-    mainContent,
+    mainContent {
+      rows[] {
+        ...,
+        column1[] {
+          ...,
+          techTags,
+          resumeUrl { asset-> { _id, url } },
+          projects[]-> {
+            _id,
+            slug,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            fullDescription,
+            techStack[] {
+              name,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        },
+        column2[] {
+          ...,
+          techTags,
+          resumeUrl { asset-> { _id, url } },
+          projects[]-> {
+            _id,
+            slug,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            fullDescription,
+            techStack[] {
+              name,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        },
+        column3[] {
+          ...,
+          techTags,
+          resumeUrl { asset-> { _id, url } },
+          projects[]-> {
+            _id,
+            slug,
+            name,
+            date,
+            isWIP,
+            image { asset-> { _id, url } },
+            description,
+            fullDescription,
+            techStack[] {
+              name,
+              icon { asset-> { _id, url } }
+            },
+            liveLink,
+            githubLink
+          }
+        }
+      }
+    },
     seo {
       ...,
       parentPage->{
@@ -932,6 +1002,23 @@ export const getAllPagePathsQuery = groq`
       slug,
       seo {
         pagePath
+      }
+    }
+  }
+`
+
+// footer query
+
+export const footerMenuQuery = groq`
+  *[_type == "navigationMenu" && title == "FooterMenu"][0] {
+    _id,
+    title,
+    items[] {
+      text,
+      link,
+      subNavigationItems[] {
+        text,
+        subUrl
       }
     }
   }

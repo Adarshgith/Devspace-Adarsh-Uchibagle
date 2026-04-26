@@ -1,32 +1,43 @@
-// Import type for validation from '@sanity/types'.
+import { defineField, defineType } from 'sanity'
 
-/**
- * Schema definition for 'navigationItem', an object type in Sanity used to manage
- * individual navigation items, potentially including nested submenus.
- */
-export default {
-  name: 'navigationItem', // Unique identifier for the schema within Sanity.
-  title: 'Navigation Item', // Human-readable title for the schema as it appears in Sanity Studio.
-  type: 'object', // Specifies that this schema defines an object type.
-
-  // Fields defining the structure and content of the navigation item.
+export default defineType({
+  name: 'navigationItem',
+  title: 'Navigation Item',
+  type: 'object',
   fields: [
-    {
+    defineField({
       name: 'text',
+      title: 'Text',
       type: 'string',
-      title: 'Navigation Text',
-      validation: (Rule: {required: () => any}) => Rule.required(),
-    },
-    {
-      name: 'navigationItemUrl',
-      type: 'link', // Assuming 'link' is a custom defined type within your Sanity schemas.
-      title: 'Navigation Item URL',
-    },
-    {
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'link',
+      title: 'Link',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: 'subNavigationItems',
+      title: 'Sub Navigation Items',
       type: 'array',
-      title: 'Submenu',
-      of: [{type: 'subNavigationItem'}], // Allows nested navigation items within the submenu.
-    },
+      of: [
+        {
+          type: 'object',
+          fields: [
+            defineField({
+              name: 'text',
+              title: 'Text',
+              type: 'string',
+            }),
+            defineField({
+              name: 'subUrl',
+              title: 'URL',
+              type: 'string',
+            }),
+          ],
+        },
+      ],
+    }),
   ],
-}
+})

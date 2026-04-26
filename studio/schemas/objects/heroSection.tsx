@@ -204,13 +204,6 @@ const heroSection = {
       initialValue: false,
       hidden: ({document}: {document: BackgroundType}) => document?.heroSection?.backgroundType !== 'about-banner',
     },
-    {
-      name: 'headerContent',
-      type: 'headerSection',
-      title: 'Header Content',
-      description: 'Define additional header content that may include links or icons.',
-      hidden: ({document}: {document: HeroSectionDocument}) => !document?.heroSection?.visible,
-    },
   ],
 }
 

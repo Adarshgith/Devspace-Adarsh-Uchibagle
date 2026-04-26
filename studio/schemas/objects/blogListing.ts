@@ -32,7 +32,7 @@ export default defineType({
       of: [
         {
           type: 'reference',
-          to: [{ type: 'blogs' }],
+          to: [{ type: 'blocks' }],
         },
       ],
       validation: (Rule) => Rule.min(1).error('You must select at least one blog.'),
