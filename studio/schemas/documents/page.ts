@@ -42,12 +42,6 @@ const page = {
       group: 'mainContent',
     },
     {
-      name: 'advanceOptions',
-      title: 'Advance Options',
-      type: 'advanceOptions',
-      group: 'advanced',
-    },
-    {
       name: 'heroSection',
       title: 'Hero Section',
       type: 'heroSection',
@@ -58,12 +52,6 @@ const page = {
       title: 'Main Content',
       type: 'pageSection',
       group: 'mainContent',
-    },
-    {
-      name: 'seo',
-      title: 'SEO Settings',
-      type: 'seoFields',
-      group: 'pageSettings',
     },
     {
       name: 'showSocialShare',

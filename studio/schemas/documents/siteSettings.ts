@@ -34,6 +34,13 @@ export const siteSettingsSchema = {
   ],
   fields: [
     {
+      name: 'footerTagline',
+      title: 'Footer Tagline',
+      type: 'string',
+      group: 'footerSettings',
+      description: 'e.g. Full Stack Developer',
+    },
+    {
       name: 'noIndex',
       title: 'No-Index (Disable Search Engine Crawling)',
       type: 'boolean',
@@ -125,7 +132,7 @@ export const siteSettingsSchema = {
           description: 'URL the footer button will link to.',
           validation: (Rule: Rule) =>
             Rule.required()
-              .uri({scheme: ['http', 'https']})
+              .uri({ scheme: ['http', 'https'] })
               .error('A valid URL for the footer button link is required.'),
           //  URL for the footer button link
         },
@@ -175,8 +182,9 @@ export const siteSettingsSchema = {
       group: 'socialMedia',
       description: 'LinkedIn profile URL (e.g., https://linkedin.com/company/yourcompany).',
       validation: (Rule: Rule) =>
-        Rule.uri({scheme: ['http', 'https']})
-          .error('Please enter a valid LinkedIn URL starting with http:// or https://'),
+        Rule.uri({ scheme: ['http', 'https'] }).error(
+          'Please enter a valid LinkedIn URL starting with http:// or https://'
+        ),
       //  LinkedIn profile link
     },
     {
@@ -186,8 +194,9 @@ export const siteSettingsSchema = {
       group: 'socialMedia',
       description: 'Twitter profile URL (e.g., https://twitter.com/yourhandle).',
       validation: (Rule: Rule) =>
-        Rule.uri({scheme: ['http', 'https']})
-          .error('Please enter a valid Twitter URL starting with http:// or https://'),
+        Rule.uri({ scheme: ['http', 'https'] }).error(
+          'Please enter a valid Twitter URL starting with http:// or https://'
+        ),
       //  Twitter profile link
     },
     {
@@ -197,8 +206,9 @@ export const siteSettingsSchema = {
       group: 'socialMedia',
       description: 'Facebook page URL (e.g., https://facebook.com/yourpage).',
       validation: (Rule: Rule) =>
-        Rule.uri({scheme: ['http', 'https']})
-          .error('Please enter a valid Facebook URL starting with http:// or https://'),
+        Rule.uri({ scheme: ['http', 'https'] }).error(
+          'Please enter a valid Facebook URL starting with http:// or https://'
+        ),
       //  Facebook profile link
     },
     {
@@ -208,9 +218,33 @@ export const siteSettingsSchema = {
       group: 'socialMedia',
       description: 'Instagram profile URL (e.g., https://instagram.com/youraccount).',
       validation: (Rule: Rule) =>
-        Rule.uri({scheme: ['http', 'https']})
-          .error('Please enter a valid Instagram URL starting with http:// or https://'),
+        Rule.uri({ scheme: ['http', 'https'] }).error(
+          'Please enter a valid Instagram URL starting with http:// or https://'
+        ),
       //  Instagram profile link
+    },
+
+    {
+      name: 'githubLink',
+      title: 'GitHub Link',
+      type: 'url',
+      group: 'socialMedia',
+      description: 'GitHub profile URL (e.g., https://github.com/yourusername).',
+      validation: (Rule: Rule) =>
+        Rule.uri({ scheme: ['http', 'https'] }).error(
+          'Please enter a valid GitHub URL starting with http:// or https://'
+        ),
+    },
+    {
+      name: 'youtubeLink',
+      title: 'YouTube Link',
+      type: 'url',
+      group: 'socialMedia',
+      description: 'YouTube channel URL (e.g., https://youtube.com/@yourchannel).',
+      validation: (Rule: Rule) =>
+        Rule.uri({ scheme: ['http', 'https'] }).error(
+          'Please enter a valid YouTube URL starting with http:// or https://'
+        ),
     },
     {
       name: 'privacyLinks',
@@ -223,19 +257,23 @@ export const siteSettingsSchema = {
           name: 'privacyLink',
           type: 'array',
           title: 'Privacy Link',
-          of:[{
-            type: 'object',
-            fields: [{
-              name: 'linkTitle',
-              title: 'Link Title',
-              type: 'string',
-            },
+          of: [
             {
-              name: 'link',
-              title: 'Link',
-              type: 'string',
-            }]
-          }]
+              type: 'object',
+              fields: [
+                {
+                  name: 'linkTitle',
+                  title: 'Link Title',
+                  type: 'string',
+                },
+                {
+                  name: 'link',
+                  title: 'Link',
+                  type: 'string',
+                },
+              ],
+            },
+          ],
         },
       ],
     },
@@ -251,7 +289,8 @@ export const siteSettingsSchema = {
       type: 'text',
       title: 'Announcement Banner Text',
       group: 'siteInfo',
-      hidden: ({ document }: { document: SiteSettingsDocument }) => !document?.announcementBannerActive,
+      hidden: ({ document }: { document: SiteSettingsDocument }) =>
+        !document?.announcementBannerActive,
     },
     {
       name: 'announcementBannerLink',
@@ -259,10 +298,10 @@ export const siteSettingsSchema = {
       title: 'Announcement Banner Link',
       description: 'Enter each link on a new line.',
       group: 'siteInfo',
-      hidden: ({ document }: { document: SiteSettingsDocument }) => !document?.announcementBannerActive,
+      hidden: ({ document }: { document: SiteSettingsDocument }) =>
+        !document?.announcementBannerActive,
     },
   ],
+};
 
-}
-
-export default siteSettingsSchema
+export default siteSettingsSchema;

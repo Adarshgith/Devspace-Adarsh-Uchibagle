@@ -1,5 +1,4 @@
 import { urlFor } from '@/lib/sanity'
-import Image from 'next/image'
 import Link from 'next/link'
 import PortableTextRenderer from './PortableTextRenderer'
 
@@ -35,25 +34,19 @@ export default function InfoBox({
   content,
   button
 }: InfoBoxProps) {
+
+  const imageUrl = image
+    ? (image.asset?.url || urlFor(image).width(900).height(600).url())
+    : ''
+
   const renderMedia = () => {
-    let imageUrl = '';
-    if (image) {
-      // Use direct URL if available, otherwise use urlFor for Sanity images
-      imageUrl = image.asset?.url || urlFor(image).width(600).height(400).url();
-      // Debug: log image object and generated URL
-      // eslint-disable-next-line no-console
-      console.log('InfoBox image:', image);
-      // eslint-disable-next-line no-console
-      console.log('InfoBox image url:', imageUrl);
-    }
     if (video) {
       return (
-        <div className="relative w-full h-64 mb-4">
+        <div className="w-full mb-4">
           <iframe
             src={video}
             title={title || 'Video'}
-            className="w-full h-full rounded-lg"
-            frameBorder="0"
+            className="w-full h-[400px] rounded-lg border-none"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
@@ -61,17 +54,14 @@ export default function InfoBox({
       )
     }
 
-    if (image) {
+    if (image && imageUrl) {
       return (
-        <div className="w-full mb-4 rounded-lg overflow-hidden bg-gray-100">
-          <Image
+        <div className="w-full mb-4 rounded-lg overflow-hidden">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={imageUrl}
             alt={image.alt || title || 'InfoBox image'}
-            width={600}
-            height={400}
-            className="w-full h-auto object-cover"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            unoptimized
+            className="w-full h-auto block object-top object-contain"
           />
         </div>
       )
@@ -80,88 +70,76 @@ export default function InfoBox({
     return null
   }
 
-const renderContent = () => (
-  <div className={`flex-1 ${textSectionPadding ? `p-${textSectionPadding}` : 'p-6'}`}>
-    {sectionTitle && (
-      <h3 className="text-2xl font-bold text-gray-900 mb-4">
-        {sectionTitle}
-      </h3>
-    )}
-
-    {title && !sectionTitle && (
-      <h3 className="text-xl font-semibold text-gray-900 mb-4">
-        {title}
-      </h3>
-    )}
-
-    {content && (
-      <div className="prose prose-lg max-w-none mb-4">
-        <PortableTextRenderer content={content} />
-      </div>
-    )}
-
-    {button && button.buttonText && (
-      <div className="mt-6">
-        {button.buttonLink ? (
-          <Link
-            href={button.buttonLink}
-            target={button.openInNewTab ? '_blank' : '_self'}
-            rel={button.openInNewTab ? 'noopener noreferrer' : undefined}
-            className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
-              button.buttonStyle === 'secondary'
-                ? 'bg-gray-200 text-gray-900 hover:bg-gray-300'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
-            }`}
-          >
-            {button.buttonText}
-          </Link>
-        ) : (
-          <button
-            className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
-              button.buttonStyle === 'secondary'
-                ? 'bg-gray-200 text-gray-900 hover:bg-gray-300'
-                : 'bg-blue-600 text-white hover:bg-blue-700'
-            }`}
-          >
-            {button.buttonText}
-          </button>
-        )}
-      </div>
-    )}
-  </div>
-)
+  const renderContent = () => (
+    <div className={textSectionPadding ? `p-${textSectionPadding}` : 'p-6'}>
+      {sectionTitle && (
+        <h3 className="text-2xl font-bold text-white mb-4">
+          {sectionTitle}
+        </h3>
+      )}
+      {title && !sectionTitle && (
+        <h3 className="text-xl font-semibold text-white mb-4">
+          {title}
+        </h3>
+      )}
+      {content && (
+        <div className="mb-4">
+          <PortableTextRenderer content={content} />
+        </div>
+      )}
+      {button && button.buttonText && (
+        <div className="mt-6">
+          {button.buttonLink ? (
+            <Link
+              href={button.buttonLink}
+              target={button.openInNewTab ? '_blank' : '_self'}
+              rel={button.openInNewTab ? 'noopener noreferrer' : undefined}
+              className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
+                button.buttonStyle === 'secondary'
+                  ? 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
+            >
+              {button.buttonText}
+            </Link>
+          ) : (
+            <button
+              className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-colors duration-200 ${
+                button.buttonStyle === 'secondary'
+                  ? 'bg-gray-200 text-gray-900 hover:bg-gray-300'
+                  : 'bg-blue-600 text-white hover:bg-blue-700'
+              }`}
+            >
+              {button.buttonText}
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  )
 
   const mediaComponent = renderMedia()
-  const contentComponent = renderContent()
+  const isHorizontal = imagePosition === 'left' || imagePosition === 'right'
 
-  // Layout based on image position
-  const getLayoutClass = () => {
+  const getFlexClass = () => {
     switch (imagePosition) {
-      case 'left':
-        return 'flex-row'
-      case 'right':
-        return 'flex-row-reverse'
-      case 'top':
-        return 'flex-col'
-      case 'bottom':
-        return 'flex-col-reverse'
-      default:
-        return 'flex-col'
+      case 'left': return 'flex-row'
+      case 'right': return 'flex-row-reverse'
+      case 'bottom': return 'flex-col-reverse'
+      default: return 'flex-col'
     }
   }
 
-  const isHorizontal = imagePosition === 'left' || imagePosition === 'right'
-
   return (
-    <div className="">
-      <div className={`flex ${getLayoutClass()} ${isHorizontal ? 'items-center' : ''}`}>
+    <div className="w-full">
+      <div className={`flex ${getFlexClass()} ${isHorizontal ? 'items-center gap-8' : ''}`}>
         {mediaComponent && (
-          <div className={`${isHorizontal ? 'flex-1' : 'w-full'}`}>
+          <div className={isHorizontal ? 'flex-1' : 'w-full'}>
             {mediaComponent}
           </div>
         )}
-        <div className={`${isHorizontal ? 'flex-1' : 'w-full'}`}>
-          {contentComponent}
+        <div className={isHorizontal ? 'flex-1' : 'w-full'}>
+          {renderContent()}
         </div>
       </div>
     </div>

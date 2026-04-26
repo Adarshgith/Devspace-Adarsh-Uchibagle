@@ -50,12 +50,6 @@ const blocks = {
       type: 'pageSection',
       group: 'mainContent',
     },
-    {
-      name: 'seo',
-      title: 'SEO Settings',
-      type: 'seoCategory',
-      group: 'pageSettings',
-    },
   ],
 }
 

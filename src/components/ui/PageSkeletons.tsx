@@ -1,16 +1,97 @@
 import React from 'react'
-import { 
-  SkeletonHeader, 
-  SkeletonHero, 
-  SkeletonCard, 
-  SkeletonBlogPost, 
-  SkeletonEvent, 
-  SkeletonForm,
-  SkeletonTable,
-  SkeletonNavigation,
-  Skeleton,
-  SkeletonText
-} from './Skeleton'
+
+function Skeleton({ className }: { className?: string }) {
+  return <div className={`rounded-xl bg-slate-200/80 ${className ?? ''}`} />
+}
+
+function SkeletonText({ lines = 3 }: { lines?: number }) {
+  return (
+    <div className="space-y-3">
+      {Array.from({ length: lines }).map((_, index) => (
+        <Skeleton key={index} className="h-4 w-full rounded-md" />
+      ))}
+    </div>
+  )
+}
+
+function SkeletonHeader() {
+  return (
+    <div className="bg-white shadow-sm">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center justify-between">
+        <Skeleton className="h-8 w-48" />
+        <div className="flex items-center gap-3">
+          <Skeleton className="h-8 w-20" />
+          <Skeleton className="h-8 w-20" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function SkeletonBlogPost() {
+  return (
+    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm animate-pulse">
+      <Skeleton className="h-40 w-full rounded-3xl" />
+      <div className="mt-6 space-y-4">
+        <Skeleton className="h-5 w-3/4" />
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-5/6" />
+      </div>
+    </div>
+  )
+}
+
+function SkeletonEvent() {
+  return (
+    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm animate-pulse">
+      <Skeleton className="h-6 w-1/3" />
+      <Skeleton className="mt-4 h-4 w-full" />
+      <Skeleton className="mt-2 h-4 w-4/5" />
+      <div className="mt-5 flex flex-wrap gap-3">
+        <Skeleton className="h-10 w-24 rounded-full" />
+        <Skeleton className="h-10 w-24 rounded-full" />
+      </div>
+    </div>
+  )
+}
+
+function SkeletonForm() {
+  return (
+    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm animate-pulse">
+      <Skeleton className="h-6 w-36" />
+      <Skeleton className="mt-4 h-10 w-full" />
+      <Skeleton className="mt-3 h-10 w-full" />
+      <Skeleton className="mt-3 h-10 w-3/4" />
+    </div>
+  )
+}
+
+function SkeletonCard() {
+  return (
+    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm animate-pulse">
+      <Skeleton className="h-6 w-1/2" />
+      <Skeleton className="mt-4 h-4 w-full" />
+      <Skeleton className="mt-3 h-4 w-5/6" />
+    </div>
+  )
+}
+
+function SkeletonTable({ rows, cols }: { rows: number; cols: number }) {
+  return (
+    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-sm animate-pulse">
+      <Skeleton className="h-6 w-40" />
+      <div className="mt-4 space-y-3">
+        {Array.from({ length: rows }).map((_, rowIndex) => (
+          <div key={rowIndex} className="flex gap-3">
+            {Array.from({ length: cols }).map((__, colIndex) => (
+              <Skeleton key={colIndex} className="h-10 flex-1" />
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 // Blog page skeleton
 export function BlogPageSkeleton() {

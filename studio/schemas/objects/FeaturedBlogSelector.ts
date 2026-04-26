@@ -19,7 +19,7 @@ export default defineType({
       title: 'Blog IDs',
       type: 'array',
       description: 'Select the blog posts to display in this module.',
-      of: [{ type: 'reference', to: [{ type: 'blogs' }] }],
+      of: [{ type: 'reference', to: [{ type: 'blocks' }] }],
       validation: (Rule) => Rule.required().min(1).error('At least one blog ID is required.'),
     }),
     // Add a new field for layout type

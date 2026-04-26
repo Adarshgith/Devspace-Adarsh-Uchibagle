@@ -7,10 +7,6 @@ export default (S) =>
       .items([
         S.documentTypeListItem('page').title('Pages'),
         S.documentTypeListItem('project').title('Projects'),
-        S.documentTypeListItem('blogs').title('Blogs'),
-        S.documentTypeListItem('events').title('Events'),
-        S.documentTypeListItem('news').title('News'),
-        S.documentTypeListItem('faqs').title('FAQs'),
         S.listItem()
         .title('Taxonomy')
         .icon(BsFillPersonLinesFill )
@@ -33,20 +29,6 @@ export default (S) =>
                           .documentId(documentId)
                     )
                 ),
-                S.listItem()
-                  .title('Faqs Category')
-                  .icon(BiBook)
-                  .child(
-                    S.documentList()
-                      .title('Faqs Category')
-                      .filter('_type == "faqscategories" && assignTo == "faqs"')
-                      .apiVersion('2025-02-14')
-                      .child((documentId) =>
-                        S.document()
-                          .schemaType('faqscategories')
-                          .documentId(documentId)
-                    )
-                ),  
             ])
         ),
         S.documentTypeListItem('navigationMenu').title('Navigation Menu'),

@@ -19,7 +19,7 @@ const SubscribeForm = ({jotFormId}: Props) => {
     if (scriptContainer) {
       scriptContainer.innerHTML = ''; // Clear any existing content
       scriptContainer.appendChild(jotFormScript); // Append the new script
-    }
+    } 
   }, []);
 
   return (

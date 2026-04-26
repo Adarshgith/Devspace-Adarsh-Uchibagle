@@ -12,161 +12,164 @@ interface PortableTextRendererProps {
   className?: string
 }
 
-// Custom components for rendering different block types
 const components: PortableTextComponents = {
-  // Block-level elements
   block: {
-    // Headings
     h1: ({ children }) => (
-      <h1 className="text-4xl font-bold text-gray-900 mb-6 mt-8 first:mt-0">
+      <h1 style={{ fontSize: '2.5rem', fontWeight: '700', color: '#ffffff', marginBottom: '1.5rem', marginTop: '2rem', lineHeight: '1.2' }}>
         {children}
       </h1>
     ),
     h2: ({ children }) => (
-      <h2 className="text-3xl font-bold text-gray-900 mb-5 mt-8 first:mt-0">
+      <h2 style={{ fontSize: '2rem', fontWeight: '700', color: '#ffffff', marginBottom: '1.25rem', marginTop: '2rem', lineHeight: '1.3' }}>
         {children}
       </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-2xl font-bold text-gray-900 mb-4 mt-6 first:mt-0">
+      <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#ffffff', marginBottom: '1rem', marginTop: '1.5rem', lineHeight: '1.4' }}>
         {children}
       </h3>
     ),
     h4: ({ children }) => (
-      <h4 className="text-xl font-bold text-gray-900 mb-3 mt-5 first:mt-0">
+      <h4 style={{ fontSize: '1.25rem', fontWeight: '700', color: '#ffffff', marginBottom: '0.75rem', marginTop: '1.25rem', lineHeight: '1.4' }}>
         {children}
       </h4>
     ),
     h5: ({ children }) => (
-      <h5 className="text-lg font-bold text-gray-900 mb-3 mt-4 first:mt-0">
+      <h5 style={{ fontSize: '1.125rem', fontWeight: '700', color: '#ffffff', marginBottom: '0.75rem', marginTop: '1rem', lineHeight: '1.5' }}>
         {children}
       </h5>
     ),
     h6: ({ children }) => (
-      <h6 className="text-base font-bold text-gray-900 mb-2 mt-4 first:mt-0">
+      <h6 style={{ fontSize: '1rem', fontWeight: '700', color: '#ffffff', marginBottom: '0.5rem', marginTop: '1rem', lineHeight: '1.5' }}>
         {children}
       </h6>
     ),
-
-    // Paragraphs
     normal: ({ children }) => (
-      <p className="!text-gray-400 leading-relaxed mb-4 max-md:!text-sm max-md:text-start">
+      <p style={{ color: '#9ca3af', lineHeight: '1.75', marginBottom: '1rem', textAlign: 'left' }}>
         {children}
       </p>
     ),
-
-    // Blockquotes
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-blue-500 pl-6 py-2 my-6 bg-blue-50 rounded-r-lg">
-        <div className="text-gray-700 italic text-lg">
+      <blockquote style={{ borderLeft: '4px solid #3b82f6', paddingLeft: '1.5rem', paddingTop: '0.5rem', paddingBottom: '0.5rem', margin: '1.5rem 0', backgroundColor: '#1e3a5f', borderRadius: '0 0.5rem 0.5rem 0' }}>
+        <div style={{ color: '#93c5fd', fontStyle: 'italic', fontSize: '1.125rem' }}>
           {children}
         </div>
       </blockquote>
-    )
+    ),
   },
 
-  // List elements
   list: {
     bullet: ({ children }) => (
-      <ul className="list-disc list-inside space-y-2 mb-4 ml-4">
+      <ul style={{ listStyleType: 'disc', paddingLeft: '1.5rem', marginBottom: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         {children}
       </ul>
     ),
     number: ({ children }) => (
-      <ol className="list-decimal list-inside space-y-2 mb-4 ml-4">
+      <ol style={{ listStyleType: 'decimal', paddingLeft: '1.5rem', marginBottom: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
         {children}
       </ol>
-    )
+    ),
   },
 
   listItem: {
     bullet: ({ children }) => (
-      <li className="text-gray-700 leading-relaxed">
+      <li style={{ color: '#9ca3af', lineHeight: '1.75' }}>
         {children}
       </li>
     ),
     number: ({ children }) => (
-      <li className="text-gray-700 leading-relaxed">
+      <li style={{ color: '#9ca3af', lineHeight: '1.75' }}>
         {children}
       </li>
-    )
+    ),
   },
 
-  // Inline elements
   marks: {
     strong: ({ children }) => (
-      <strong className="font-semibold text-gray-900">
+      <strong style={{ fontWeight: '600', color: '#ffffff' }}>
         {children}
       </strong>
     ),
     em: ({ children }) => (
-      <em className="italic">
+      <em style={{ fontStyle: 'italic' }}>
         {children}
       </em>
     ),
     underline: ({ children }) => (
-      <span className="underline">
+      <span style={{ textDecoration: 'underline' }}>
         {children}
       </span>
     ),
     'strike-through': ({ children }) => (
-      <span className="line-through">
+      <span style={{ textDecoration: 'line-through' }}>
         {children}
       </span>
     ),
     code: ({ children }) => (
-      <code className="bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm font-mono">
+      <code style={{ backgroundColor: '#1f2937', color: '#e5e7eb', padding: '0.125rem 0.5rem', borderRadius: '0.25rem', fontSize: '0.875rem', fontFamily: 'monospace' }}>
         {children}
       </code>
     ),
-    link: ({ children, value }) => {
-      const isExternal = value?.href?.startsWith('http') || value?.href?.startsWith('mailto:')
+    left: ({ children }) => (
+      <span style={{ display: 'block', textAlign: 'left' }}>
+        {children}
+      </span>
+    ),
+    center: ({ children }) => (
+      <span style={{ display: 'block', textAlign: 'center' }}>
+        {children}
+      </span>
+    ),
+  right: ({ children }) => (
+    <span style={{ display: 'block', textAlign: 'right' }}>
+      {children}
+    </span>
+  ),
+  link: ({ children, value }) => {
+    const href = value && value.href ? value.href : '#'
+    const isExternal = href.startsWith('http') || href.startsWith('mailto:')
+    const isBlank = value && value.blank ? true : false
 
-      if (isExternal) {
-        return (
-          <a
-            href={value?.href}
-            target={value?.blank ? '_blank' : '_self'}
-            rel={value?.blank ? 'noopener noreferrer' : undefined}
-            className="text-blue-600 hover:text-blue-800 underline transition-colors duration-200"
-          >
-            {children}
-          </a>
-        )
-      }
-
+    if (isExternal) {
       return (
-        <Link
-          href={value?.href || '#'}
-          className="text-blue-600 hover:text-blue-800 underline transition-colors duration-200"
+        <a
+          href={href}
+          target={isBlank ? '_blank' : '_self'}
+          rel={isBlank ? 'noopener noreferrer' : undefined}
+          style={{ color: '#60a5fa', textDecoration: 'underline' }}
         >
           {children}
-        </Link>
+        </a>
       )
     }
+    return (
+      <Link
+        href={href}
+        style={{ color: '#60a5fa', textDecoration: 'underline' }}
+      >
+        {children}
+      </Link>
+    )
   },
+},
 
-  // Custom types
-  types: {
-    // Image blocks
+types: {
     image: ({ value }) => {
       if (!value?.asset) return null
-
       return (
-        <figure className="my-8">
-          <div className="relative rounded-lg overflow-hidden bg-gray-100">
+        <figure style={{ margin: '2rem 0' }}>
+          <div style={{ position: 'relative', borderRadius: '0.5rem', overflow: 'hidden', backgroundColor: '#1f2937' }}>
             <Image
               src={urlFor(value as SanityImageSource).width(800).height(600).url()}
               alt={value.alt || 'Image'}
               width={800}
               height={600}
-              className="w-full h-auto object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+              style={{ width: '100%', height: 'auto', objectFit: 'cover' }}
               unoptimized
             />
           </div>
           {value.caption && (
-            <figcaption className="text-sm text-gray-600 text-center mt-3 italic">
+            <figcaption style={{ fontSize: '0.875rem', color: '#9ca3af', textAlign: 'center', marginTop: '0.75rem', fontStyle: 'italic' }}>
               {value.caption}
             </figcaption>
           )}
@@ -174,45 +177,42 @@ const components: PortableTextComponents = {
       )
     },
 
-    // Code blocks
     code: ({ value }) => (
-      <div className="my-6">
-        <div className="bg-gray-900 rounded-t-lg px-4 py-2 flex items-center justify-between">
-          <span className="text-gray-300 text-sm font-medium">
+      <div style={{ margin: '1.5rem 0' }}>
+        <div style={{ backgroundColor: '#111827', borderRadius: '0.5rem 0.5rem 0 0', padding: '0.5rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <span style={{ color: '#d1d5db', fontSize: '0.875rem', fontWeight: '500' }}>
             {value.language || 'Code'}
           </span>
           <button
             onClick={() => navigator.clipboard.writeText(value.code)}
-            className="text-gray-400 hover:text-white text-xs px-2 py-1 rounded transition-colors duration-200"
+            style={{ color: '#9ca3af', fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '0.25rem', background: 'none', border: 'none', cursor: 'pointer' }}
           >
             Copy
           </button>
         </div>
-        <pre className="bg-gray-800 text-gray-100 p-4 rounded-b-lg overflow-x-auto">
-          <code className="text-sm font-mono">
+        <pre style={{ backgroundColor: '#1f2937', color: '#f3f4f6', padding: '1rem', borderRadius: '0 0 0.5rem 0.5rem', overflowX: 'auto' }}>
+          <code style={{ fontSize: '0.875rem', fontFamily: 'monospace' }}>
             {value.code}
           </code>
         </pre>
       </div>
     ),
 
-    // Video embeds
     video: ({ value }) => {
       if (!value?.url) return null
-
       return (
-        <div className="my-8">
-          <div className="relative aspect-video rounded-lg overflow-hidden bg-gray-100">
+        <div style={{ margin: '2rem 0' }}>
+          <div style={{ position: 'relative', aspectRatio: '16/9', borderRadius: '0.5rem', overflow: 'hidden', backgroundColor: '#1f2937' }}>
             <iframe
               src={value.url}
               title={value.title || 'Video'}
-              className="absolute inset-0 w-full h-full"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
               allowFullScreen
               loading="lazy"
             />
           </div>
           {value.caption && (
-            <p className="text-sm text-gray-600 text-center mt-3 italic">
+            <p style={{ fontSize: '0.875rem', color: '#9ca3af', textAlign: 'center', marginTop: '0.75rem', fontStyle: 'italic' }}>
               {value.caption}
             </p>
           )}
@@ -220,23 +220,22 @@ const components: PortableTextComponents = {
       )
     },
 
-    // Call-to-action blocks
     callToAction: ({ value }) => (
-      <div className="my-8 bg-gradient-to-r from-blue-600 to-indigo-700 rounded-xl p-8 text-white text-center">
+      <div style={{ margin: '2rem 0', background: 'linear-gradient(to right, #2563eb, #4338ca)', borderRadius: '0.75rem', padding: '2rem', textAlign: 'center' }}>
         {value.title && (
-          <h3 className="text-2xl font-bold mb-4">
+          <h3 style={{ fontSize: '1.5rem', fontWeight: '700', color: '#ffffff', marginBottom: '1rem' }}>
             {value.title}
           </h3>
         )}
         {value.description && (
-          <p className="text-blue-100 mb-6 text-lg">
+          <p style={{ color: '#bfdbfe', marginBottom: '1.5rem', fontSize: '1.125rem' }}>
             {value.description}
           </p>
         )}
         {value.buttonText && value.buttonUrl && (
           <Link
             href={value.buttonUrl}
-            className="inline-flex items-center px-6 py-3 bg-white text-blue-600 rounded-lg hover:bg-gray-100 transition-colors duration-200 font-medium"
+            style={{ display: 'inline-flex', alignItems: 'center', padding: '0.75rem 1.5rem', backgroundColor: '#ffffff', color: '#2563eb', borderRadius: '0.5rem', fontWeight: '500', textDecoration: 'none' }}
             target={value.newTab ? '_blank' : '_self'}
             rel={value.newTab ? 'noopener noreferrer' : undefined}
           >
@@ -246,26 +245,23 @@ const components: PortableTextComponents = {
       </div>
     ),
 
-    // Alert/Notice blocks
     alert: ({ value }) => {
-      const alertStyles = {
-        info: 'bg-blue-50 border-blue-200 text-blue-800',
-        warning: 'bg-yellow-50 border-yellow-200 text-yellow-800',
-        error: 'bg-red-50 border-red-200 text-red-800',
-        success: 'bg-green-50 border-green-200 text-green-800'
+      const alertStyles: Record<string, { border: string; background: string; color: string }> = {
+        info:    { border: '#3b82f6', background: '#1e3a5f', color: '#93c5fd' },
+        warning: { border: '#f59e0b', background: '#451a03', color: '#fcd34d' },
+        error:   { border: '#ef4444', background: '#450a0a', color: '#fca5a5' },
+        success: { border: '#22c55e', background: '#052e16', color: '#86efac' },
       }
-
-      const alertStyle = alertStyles[value.type as keyof typeof alertStyles] || alertStyles.info
-
+      const s = alertStyles[value.type] || alertStyles.info
       return (
-        <div className={cn('border-l-4 p-4 my-6 rounded-r-lg', alertStyle)}>
+        <div style={{ borderLeft: `4px solid ${s.border}`, padding: '1rem', margin: '1.5rem 0', borderRadius: '0 0.5rem 0.5rem 0', backgroundColor: s.background }}>
           {value.title && (
-            <h4 className="font-semibold mb-2">
+            <h4 style={{ fontWeight: '600', marginBottom: '0.5rem', color: s.color }}>
               {value.title}
             </h4>
           )}
           {value.message && (
-            <p className="leading-relaxed">
+            <p style={{ lineHeight: '1.75', color: s.color }}>
               {value.message}
             </p>
           )}
@@ -273,24 +269,19 @@ const components: PortableTextComponents = {
       )
     },
 
-    // Table blocks
     table: ({ value }) => {
       if (!value?.rows || value.rows.length === 0) return null
-
       return (
-        <div className="my-8 overflow-x-auto">
-          <table className="min-w-full border border-gray-200 rounded-lg overflow-hidden">
+        <div style={{ margin: '2rem 0', overflowX: 'auto' }}>
+          <table style={{ minWidth: '100%', border: '1px solid #374151', borderRadius: '0.5rem', overflow: 'hidden', borderCollapse: 'collapse' }}>
             {value.rows.map((row: { cells?: string[] }, rowIndex: number) => (
-              <tr key={rowIndex} className={rowIndex === 0 ? 'bg-gray-50' : 'bg-white'}>
+              <tr key={rowIndex} style={{ backgroundColor: rowIndex === 0 ? '#1f2937' : '#111827' }}>
                 {row.cells?.map((cell: string, cellIndex: number) => {
                   const Tag = rowIndex === 0 ? 'th' : 'td'
                   return (
                     <Tag
                       key={cellIndex}
-                      className={cn(
-                        'px-4 py-3 border-b border-gray-200 text-left',
-                        rowIndex === 0 ? 'font-semibold text-gray-900' : 'text-gray-700'
-                      )}
+                      style={{ padding: '0.75rem 1rem', borderBottom: '1px solid #374151', textAlign: 'left', color: rowIndex === 0 ? '#ffffff' : '#d1d5db', fontWeight: rowIndex === 0 ? '600' : '400' }}
                     >
                       {cell}
                     </Tag>
@@ -301,68 +292,46 @@ const components: PortableTextComponents = {
           </table>
         </div>
       )
-    }
-  }
+    },
+  },
 }
 
 export default function PortableTextRenderer({ content, className }: PortableTextRendererProps) {
-  if (!content || !Array.isArray(content)) {
-    return null
-  }
+  if (!content || !Array.isArray(content)) return null
 
   return (
-    <div className={cn('prose prose-lg max-w-none', className)}>
-      <PortableText
-        value={content}
-        components={components}
-      />
+    <div className={cn('max-w-none', className)}>
+      <PortableText value={content} components={components} />
     </div>
   )
 }
 
-// Simplified renderer for excerpts or short content
 export function SimplePortableTextRenderer({ content, className }: PortableTextRendererProps) {
-  if (!content || !Array.isArray(content)) {
-    return null
-  }
+  if (!content || !Array.isArray(content)) return null
 
   const simpleComponents: PortableTextComponents = {
     block: {
       normal: ({ children }) => (
-        <p className="text-gray-700 leading-relaxed">
+        <p style={{ color: '#374151', lineHeight: '1.75' }}>
           {children}
         </p>
-      )
+      ),
     },
     marks: {
-      strong: ({ children }) => (
-        <strong className="font-semibold">
-          {children}
-        </strong>
-      ),
-      em: ({ children }) => (
-        <em className="italic">
-          {children}
-        </em>
-      )
-    }
+      strong: ({ children }) => <strong style={{ fontWeight: '600' }}>{children}</strong>,
+      em: ({ children }) => <em style={{ fontStyle: 'italic' }}>{children}</em>,
+    },
   }
 
   return (
     <div className={className}>
-      <PortableText
-        value={content}
-        components={simpleComponents}
-      />
+      <PortableText value={content} components={simpleComponents} />
     </div>
   )
 }
 
-// Plain text renderer (for meta descriptions, etc.)
 export function PlainTextRenderer({ content }: { content: unknown[] }) {
-  if (!content || !Array.isArray(content)) {
-    return ''
-  }
+  if (!content || !Array.isArray(content)) return ''
 
   return content
     .filter((block: any) => block._type === 'block')
