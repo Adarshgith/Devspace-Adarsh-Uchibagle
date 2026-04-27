@@ -36,17 +36,17 @@ export default function InfoBox({
 }: InfoBoxProps) {
 
   const imageUrl = image
-    ? (image.asset?.url || urlFor(image).width(900).height(600).url())
+    ? (image.asset?.url || urlFor(image).width(600).height(400).url())
     : ''
 
   const renderMedia = () => {
     if (video) {
       return (
-        <div className="w-full mb-4">
+        <div className="w-full">
           <iframe
             src={video}
             title={title || 'Video'}
-            className="w-full h-[400px] rounded-lg border-none"
+            className="w-full h-[240px] sm:h-[280px] rounded-xl border-none"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
           />
@@ -56,13 +56,23 @@ export default function InfoBox({
 
     if (image && imageUrl) {
       return (
-        <div className="w-full mb-4 rounded-lg overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={imageUrl}
-            alt={image.alt || title || 'InfoBox image'}
-            className="w-full h-auto block object-top object-contain"
-          />
+        <div className="relative w-full">
+          {/* Decorative background blob */}
+          <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-[#00BCD4]/10 rounded-[2rem] blur-2xl scale-95 pointer-events-none" />
+
+          {/* Decorative border ring */}
+          <div className="absolute -inset-1 bg-gradient-to-br from-purple-500/30 via-transparent to-[#00BCD4]/30 rounded-[2rem] pointer-events-none" />
+
+          {/* Main image */}
+          <div className="relative z-10 rounded-[1.75rem] overflow-hidden border border-white/10">
+            <img
+              src={imageUrl}
+              alt={image.alt || title || 'InfoBox image'}
+              className="w-full h-auto object-contain block"
+            />
+            {/* Subtle overlay gradient at bottom */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0d0a1a]/60 to-transparent pointer-events-none" />
+          </div>
         </div>
       )
     }
@@ -71,7 +81,7 @@ export default function InfoBox({
   }
 
   const renderContent = () => (
-    <div className={textSectionPadding ? `p-${textSectionPadding}` : 'p-6'}>
+    <div className={textSectionPadding ? `p-${textSectionPadding}` : ''}>
       {sectionTitle && (
         <h3 className="text-2xl font-bold text-white mb-4">
           {sectionTitle}
@@ -121,27 +131,56 @@ export default function InfoBox({
   const mediaComponent = renderMedia()
   const isHorizontal = imagePosition === 'left' || imagePosition === 'right'
 
-  const getFlexClass = () => {
-    switch (imagePosition) {
-      case 'left': return 'flex-row'
-      case 'right': return 'flex-row-reverse'
-      case 'bottom': return 'flex-col-reverse'
-      default: return 'flex-col'
-    }
+  // ── Vertical layouts (top / bottom) ──────────────────────────────
+  if (!isHorizontal) {
+    return (
+      <div className="w-full flex flex-col gap-4">
+        {imagePosition === 'bottom' ? (
+          <>
+            {renderContent()}
+            {mediaComponent}
+          </>
+        ) : (
+          <>
+            {mediaComponent}
+            {renderContent()}
+          </>
+        )}
+      </div>
+    )
   }
 
+  // ── Horizontal layouts (left / right) ────────────────────────────
+  // Mobile: image always on top, content below
+  // Desktop: image left/right with 3fr/7fr split
   return (
     <div className="w-full">
-      <div className={`flex ${getFlexClass()} ${isHorizontal ? 'items-center gap-8' : ''}`}>
+
+      {/* ── Mobile — image first, content below ── */}
+      <div className="flex flex-col gap-5 md:hidden">
+        {mediaComponent}
+        {renderContent()}
+      </div>
+
+      {/* ── Desktop — side by side ── */}
+      <div
+        className={`hidden md:flex items-start gap-6 lg:gap-8 ${
+          imagePosition === 'right' ? 'flex-row-reverse' : 'flex-row'
+        }`}
+      >
+        {/* Image — 3/10 width */}
         {mediaComponent && (
-          <div className={isHorizontal ? 'flex-1' : 'w-full'}>
+          <div className="w-[30%] flex-shrink-0">
             {mediaComponent}
           </div>
         )}
-        <div className={isHorizontal ? 'flex-1' : 'w-full'}>
+
+        {/* Content — 7/10 width */}
+        <div className="flex-1 min-w-0">
           {renderContent()}
         </div>
       </div>
+
     </div>
   )
 }

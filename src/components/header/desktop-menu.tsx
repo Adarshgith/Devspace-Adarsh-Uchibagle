@@ -112,14 +112,54 @@ const DesktopMenu = ({ menuTexts, mobileMenuTexts, siteSettings }: DesktopMenuPr
           className={`main-menu container flex max-lg:hidden max-lg:bef ore:fixed max-lg:before:inset-0 max-lg:before:z-50 max-lg:before:bg-black max-lg:before:opacity-50 lg:items-center`}
         >
           <div className='w-1/6 flex items-center justify-between max-[480px]:max-w-[175px]'>
+          {/* First logo instance */}
+          <Link href="/">
+            {siteSettings?.siteLogo?.asset?.url ? (
+              <Image
+                className='block max-lg:hidden max-xl:max-w-[240px]'
+                src={siteSettings.siteLogo.asset.url}
+                width={100}
+                height={50}
+                alt={siteSettings?.title || 'BeingAdarsh'}
+                unoptimized
+                priority
+              />
+            ) : (
+              <span className="block max-lg:hidden text-xl font-bold text-[#00BCD4] font-mono">
+                {siteSettings?.title || 'BeingAdarsh'}
+              </span>
+            )}
+          </Link>
+
+          {/* Second logo instance — mobile mein */}
+          <li className="mb-6 hidden max-lg:block">
             <Link href="/">
-              <Image className='block max-lg:hidden max-xl:max-w-[240px]' src={siteSettings.siteLogo.asset.url} width={100} height={50} alt={siteSettings.title} unoptimized priority />
+              {siteSettings?.siteLogo?.asset?.url ? (
+                <Image
+                  src={siteSettings.siteLogo.asset.url}
+                  width={222}
+                  height={45}
+                  alt={siteSettings?.title || 'BeingAdarsh'}
+                  priority
+                />
+              ) : (
+                <span className="text-xl font-bold text-[#00BCD4] font-mono">
+                  {siteSettings?.title || 'BeingAdarsh'}
+                </span>
+              )}
             </Link>
+          </li>
           </div>
           <ul className="level1 w-5/6 z-50 max-lg:fixed max-lg:left-0 max-lg:top-0 max-lg:h-full max-lg:w-full max-lg:min-w-[300px] max-lg:space-y-3 max-lg:overflow-auto max-lg:bg-white max-lg:p-6 max-lg:shadow-md lg:mt-0 lg:flex lg:justify-center xl:gap-x-[54px] lg:gap-x-[45px]">
             <li className="mb-6 hidden max-lg:block">
               <Link href="/">
-                <Image src={siteSettings.siteLogo.asset.url} width={222} height={45} alt={siteSettings.title} priority />
+                {siteSettings?.siteLogo?.asset?.url ? (
+                  <Image src={siteSettings.siteLogo.asset.url} width={222} height={45} alt={siteSettings?.title || 'BeingAdarsh'} priority />
+                ) : (
+                  <span className="text-xl font-bold text-[#00BCD4] font-mono">
+                    {siteSettings?.title || 'BeingAdarsh'}
+                  </span>
+                )}
               </Link>
             </li>
             {menuTexts.map((item, index) => (

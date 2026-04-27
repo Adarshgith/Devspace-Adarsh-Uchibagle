@@ -120,7 +120,6 @@ const MobileMenu = ({ menuTexts, siteSettings }: MobileMenuProps) => {
       >
         {/* <span className="mr-[13px] text-[16px] leading-[26px] text-[#547C5B] font-bold uppercase">Menu</span> */}
         <IoMenu className="text-2xl text-black" />
-        <span className='text-[10px] font-semibold text-black leading-2.5 mt-[5px]'>MENU</span>
       </button>
 
       {/* Mobile menu dialog */}
@@ -152,16 +151,20 @@ const MobileMenu = ({ menuTexts, siteSettings }: MobileMenuProps) => {
               <div className="px-[15px] py-[20px] border-b border-[#EDEDED]">
                 {/* Logo and close button */}
                 <div className="relative">
-                  <Link href="/" className="w-fit p-0 z-[100]">
-                    {siteSettings && siteSettings.siteLogo && (
-                      <Image
-                        src={siteSettings.siteLogo.asset.url}
-                        width={175}
-                        height={32}
-                        alt={siteSettings.title}
-                      />
-                    )}
-                  </Link>
+              <Link href="/" className='w-fit p-0 z-[100]'>
+                {siteSettings?.siteLogo?.asset?.url ? (
+                  <Image
+                    src={siteSettings.siteLogo.asset.url}
+                    width={175}
+                    height={32}
+                    alt={siteSettings?.title || 'BeingAdarsh'}
+                  />
+                ) : (
+                  <span className="text-xl font-bold text-[#00BCD4] font-mono">
+                    {siteSettings?.title || 'BeingAdarsh'}
+                  </span>
+                )}
+              </Link>
                   <button
                     id="toggleClose"
                     className="absolute right-0 top-[50%] -translate-y-2/4 z-[100] bg-white lg:hidden"
@@ -173,209 +176,65 @@ const MobileMenu = ({ menuTexts, siteSettings }: MobileMenuProps) => {
                 </div>
 
                 {/* Main Menu */}
-                <ul className="parent-ul absolute top-[68px] left-0 w-full h-full transition-transform duration-300 bg-white">
-                  {menuTexts.map((item, index) => (
-                    <li key={index} className="group max-lg:border-t max-lg:border-[#ECECEC]">
-                      <div className="flex justify-between items-center">
-                        <Link
-                          href={item.mainItemLink || '#'}
-                          className={`block cursor-default text-xs max-md:text-[16px] px-[15px] py-[10px] font-bold text-black w-full capitalize`}
-                          onClick={closeMobileMenu}
-                          target={item.openInNewTab ? '_blank' : '_self'}
-                        >
-                          {item.mainItemText}
-                        </Link>
-                        {item.subItemDetails.length > 0 && (
-                          <button className="w-auto" onClick={() => toggleSubmenu(index)}>
-                            <IoChevronForward className="text-xl text-black" />
-                          </button>
-                        )}
-                      </div>
+{/* Main Menu */}
+<ul className="parent-ul absolute top-[68px] left-0 w-full h-full transition-transform duration-300 bg-white">
+  {menuTexts.map((item, index) => (
+    <li key={index} className="group border-t border-[#ECECEC]">
+      <div className="flex justify-between items-center">
+        <Link
+          href={item.mainItemLink || '#'}
+          className="block text-[16px] px-[15px] py-[13px] font-bold text-black w-full capitalize"
+          onClick={closeMobileMenu}
+          target={item.openInNewTab ? '_blank' : '_self'}
+        >
+          {item.mainItemText}
+        </Link>
+        {/* ── Show chevron ONLY if subItems exist ── */}
+        {item.subItemDetails && item.subItemDetails.length > 0 && (
+          <button className="w-auto px-4" onClick={() => toggleSubmenu(index)}>
+            <IoChevronForward className="text-xl text-black" />
+          </button>
+        )}
+      </div>
 
-                      {/* Level 2 Submenu */}
-                      <ul
-                        className={`level2 absolute top-0 left-0 w-full h-full bg-white z-20 transition-transform duration-300 ${
-                          openSubmenuIndex === index ? 'translate-x-0' : 'translate-x-full'
-                        }`}
-                      >
-                        <li className="back-to-parent">
-                          <button
-                            onClick={() => toggleSubmenu(null)}
-                            className="w-full py-[8px] px-[10px] bg-gray-white text-base leading-[26px] font-bold text-black hover:text-black uppercase flex items-center"
-                          >
-                            <IoChevronBack className="text-xl text-black" /> <span className="pl-[5px] text-xxs text-black capitalize">Back</span>
-                          </button>
-                        </li>
-                        <li className="parent-name">
-                            <p className="px-[15px] pt-5 pb-2.5 font-semibold text-xxl text-black capitalize">{item.mainItemText}</p>
-                        </li>
-                        {item.subItemDetails.map((subItem, subIndex) => (
-                          <li key={subIndex} className="border-t border-[#EDEDED]">
-                            <div className="flex justify-between items-center">
-                              <Link
-                                href={subItem.subExternalUrl || '#'}
-                                className={`block cursor-default text-xs max-md:text-[16px] px-[15px] py-[10px] font-bold text-black w-full capitalize`}
-                                onClick={closeMobileMenu}
-                                target={subItem.openInNewTab ? '_blank' : '_self'}
-                              >
-                                {subItem.text}
-                              </Link>
-                              {subItem.level3Items.length > 0 && (
-                                <button className="w-auto" onClick={() => toggleLevel3(subIndex)}>
-                                  <IoChevronForward className="text-xl text-black" />
-                                </button>
-                              )}
-                            </div>
-
-                            {/* Level 3 Submenu */}
-                            <ul
-                              className={`level3 absolute top-0 left-0 w-full h-full bg-white z-30 transition-transform duration-300 ${
-                                openLevel3Index === subIndex ? 'translate-x-0' : 'translate-x-full'
-                              }`}
-                            >
-                              <li className="back-to-parent">
-                                <button
-                                  onClick={() => toggleLevel3(null)}
-                                  className="w-full py-[8px] px-[10px] bg-gray-white text-base leading-[26px] font-bold text-black hover:text-black uppercase flex items-center"
-                                >
-                                  <IoChevronBack className="text-xl text-black" /> <span className="pl-[5px] text-xxs text-black capitalize">Back</span>
-                                </button>
-                              </li>
-                              <li className="parent-name-level-two">
-                                <p className="px-[15px] pt-5 pb-2.5 font-semibold text-xxl text-black capitalize">{subItem.text}</p>
-                              </li>
-                              {subItem.level3Items.map((level3Item, level3Index) => (
-                                <li key={level3Index} className="border-t border-[#EDEDED]">
-                                  <div className="flex justify-between items-center">
-                                    <Link
-                                      href={level3Item.subExternalUrl || '#'}
-                                      className={`block cursor-default text-xs max-md:text-[16px] px-[15px] py-[10px] font-bold text-black w-full capitalize`}
-                                      onClick={closeMobileMenu}
-                                      target={level3Item.openInNewTab ? '_blank' : '_self'}
-                                    >
-                                      {level3Item.text}
-                                    </Link>
-                                    {level3Item.level4Items.length > 0 && (
-                                      <button className="w-auto" onClick={() => toggleLevel4(level3Index)}>
-                                        <IoChevronForward className="text-xl text-black" />
-                                      </button>
-                                    )}
-                                  </div>
-
-                                  {/* Level 4 Submenu */}
-                                  <ul
-                                    className={`level4 absolute top-0 left-0 w-full h-full bg-white z-40 transition-transform duration-300 ${
-                                      openLevel4Index === level3Index ? 'translate-x-0' : 'translate-x-full'
-                                    }`}
-                                  >
-                                    <li className="back-to-parent">
-                                      <button
-                                        onClick={() => toggleLevel4(null)}
-                                        className="w-full py-[8px] px-[10px] bg-gray-white text-base leading-[26px] font-bold text-black hover:text-black uppercase flex items-center"
-                                      >
-                                        <IoChevronBack className="text-xl text-black" /> <span className="pl-[5px] text-xxs text-black capitalize">Back</span>
-                                      </button>
-                                    </li>
-                                    <li className="parent-name-level-two">
-                                      <p className="px-[15px] pt-5 pb-2.5 font-semibold text-xxl text-black capitalize">{level3Item.text}</p>
-                                    </li>
-                                    {level3Item.level4Items.map((level4Item, level4Index) => (
-                                      <li key={level4Index} className="border-t border-[#EDEDED]">
-                                        <div className="flex justify-between items-center">
-                                          <Link
-                                            href={level4Item.subExternalUrl || '#'}
-                                            className={`block cursor-default text-xs max-md:text-[16px] px-[15px] py-[10px] font-bold text-black w-full capitalize`}
-                                            onClick={closeMobileMenu}
-                                            target={level4Item.openInNewTab ? '_blank' : '_self'}
-                                          >
-                                            {level4Item.text}
-                                          </Link>
-                                          {level4Item.level5Items.length > 0 && (
-                                            <button className="w-auto" onClick={() => toggleLevel5(level4Index)}>
-                                              <IoChevronForward className="text-xl text-black" />
-                                            </button>
-                                          )}
-                                        </div>
-
-                                        {/* Level 5 Submenu */}
-                                        <ul
-                                          className={`level5 absolute top-0 left-0 w-full h-full bg-white z-50 transition-transform duration-300 ${
-                                            openLevel5Index === level4Index ? 'translate-x-0' : 'translate-x-full'
-                                          }`}
-                                        >
-                                          <li className="back-to-parent">
-                                            <button
-                                              onClick={() => toggleLevel5(null)}
-                                              className="w-full py-[8px] px-[10px] bg-gray-white text-base leading-[26px] font-bold text-black hover:text-black uppercase flex items-center"
-                                            >
-                                              <IoChevronBack className="text-xl text-black" /> <span className="pl-[5px] text-xxs text-black capitalize">Back</span>
-                                            </button>
-                                          </li>
-                                          <li className="parent-name-level-two">
-                                            <p className="px-[15px] pt-5 pb-2.5 font-semibold text-xxl text-black capitalize">{level4Item.text}</p>
-                                          </li>
-                                          {level4Item.level5Items.map((level5Item, level5Index) => (
-                                            <li key={level5Index} className="border-t border-[#EDEDED]">
-                                              <div className="flex justify-between items-center">
-                                                <Link
-                                                  href={level5Item.subExternalUrl || '#'}
-                                                  className={`block cursor-default text-xs max-md:text-[16px] px-[15px] py-[10px] font-bold text-black w-full capitalize`}
-                                                  onClick={closeMobileMenu}
-                                                  target={level5Item.openInNewTab ? '_blank' : '_self'}
-                                                >
-                                                  {level5Item.text}
-                                                </Link>
-                                                {level5Item.level6Items.length > 0 && (
-                                                  <button className="w-auto" onClick={() => toggleLevel6(level5Index)}>
-                                                    <IoChevronForward className="text-xl text-black" />
-                                                  </button>
-                                                )}
-                                              </div>
-
-                                              {/* Level 6 Submenu */}
-                                              <ul
-                                                className={`level6 absolute top-0 left-0 w-full h-full bg-white z-60 transition-transform duration-300 ${
-                                                  openLevel6Index === level5Index ? 'translate-x-0' : 'translate-x-full'
-                                                }`}
-                                              >
-                                                <li className="back-to-parent">                                                    <button
-                                                      onClick={() => toggleLevel6(null)}
-                                                      className="w-full py-[8px] px-[10px] bg-gray-white text-base leading-[26px] font-bold text-black hover:text-black uppercase flex items-center"
-                                                    >
-                                                      <IoChevronBack className="text-xl text-black" /> <span className="pl-[5px] text-xxs text-black capitalize">Back</span>
-                                                    </button>
-                                                </li>
-                                                <li className="parent-name-level-two">
-                                                  <p className="px-[15px] pt-5 pb-2.5 font-semibold text-xxl text-black capitalize">{level5Item.text}</p>
-                                                </li>
-                                                {level5Item.level6Items.map((level6Item, level6Index) => (
-                                                  <li key={level6Index} className="border-b border-[#EDEDED]">
-                                                    <Link
-                                                      href={level6Item.subExternalUrl || '#'}
-                                                      className={`block cursor-default text-xs max-md:text-[16px] px-[15px] py-[10px] font-bold text-black w-full capitalize`}
-                                                      onClick={closeMobileMenu}
-                                                      target={level6Item.openInNewTab ? '_blank' : '_self'}
-                                                    >
-                                                      {level6Item.text}
-                                                    </Link>
-                                                  </li>
-                                                ))}
-                                              </ul>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </li>
-                              ))}
-                            </ul>
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
+      {/* ── Level 2 — only render if subItems exist ── */}
+      {item.subItemDetails && item.subItemDetails.length > 0 && (
+        <ul
+          className={`level2 absolute top-0 left-0 w-full h-full bg-white z-20 transition-transform duration-300 ${
+            openSubmenuIndex === index ? 'translate-x-0' : 'translate-x-full'
+          }`}
+        >
+          <li className="back-to-parent">
+            <button
+              onClick={() => toggleSubmenu(null)}
+              className="w-full py-[8px] px-[10px] text-base leading-[26px] font-bold text-black uppercase flex items-center"
+            >
+              <IoChevronBack className="text-xl text-black" />
+              <span className="pl-[5px] text-xxs text-black capitalize">Back</span>
+            </button>
+          </li>
+          <li className="parent-name">
+            <p className="px-[15px] pt-5 pb-2.5 font-semibold text-xxl text-black capitalize">
+              {item.mainItemText}
+            </p>
+          </li>
+          {item.subItemDetails.map((subItem, subIndex) => (
+            <li key={subIndex} className="border-t border-[#EDEDED]">
+              <Link
+                href={subItem.subUrl || subItem.subExternalUrl || '#'}
+                className="block text-[16px] px-[15px] py-[13px] font-bold text-black w-full capitalize"
+                onClick={closeMobileMenu}
+                target={subItem.openInNewTab ? '_blank' : '_self'}
+              >
+                {subItem.text}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </li>
+  ))}
+</ul>
               </div>
             </Dialog.Panel>
           </Transition.Child>

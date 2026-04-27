@@ -9,12 +9,6 @@ export const siteSettingsQuery = groq`
     sitemapXml,
     title,
     description,
-    siteLogo {
-      asset-> {
-        _id,
-        url
-      }
-    },
     footerLogo {
       asset-> {
         _id,
