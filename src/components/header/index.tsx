@@ -64,7 +64,7 @@ export const Header = async () => {
 
   // Fetch data for both desktop and mobile menus
   const desktopMenuTitle = 'HeaderMenu';
-  const mobileMenuTitle = 'MobileMenu';
+  const mobileMenuTitle = 'HeaderMenu';
 
   const desktopMenuDataArray = await headerQuery(sclient, desktopMenuTitle);
   const mobileMenuDataArray = await headerQuery(sclient, mobileMenuTitle);
@@ -132,9 +132,22 @@ export const Header = async () => {
       <section className='lg:hidden border-b border-brand-dark-20 py-[22px] max-md:py-[15px]'>
         <div className='container grid grid-cols-[27%_44%_29%] max-xl:grid-cols-[27%_41%_32%] items-center max-lg:grid-cols-[50%_50%] max-lg:gap-y-4'>
           <div className='w-full flex items-center justify-between max-[480px]:max-w-[175px]'>
-            <Link href="/">
-              <Image className='hidden max-lg:block' src={siteSettings.siteLogo.asset.url} width={294} height={57} alt={siteSettings.title} priority />
-            </Link>
+        <Link href="/">
+          {siteSettings?.siteLogo?.asset?.url ? (
+            <Image
+              className='hidden max-lg:block'
+              src={siteSettings.siteLogo.asset.url}
+              width={294}
+              height={57}
+              alt={siteSettings?.title || 'BeingAdarsh'}
+              priority
+            />
+          ) : (
+            <span className="hidden max-lg:block text-xl font-bold text-[#00BCD4] font-mono">
+              {siteSettings?.title || 'BeingAdarsh'}
+            </span>
+          )}
+        </Link>
           </div>
           <div className='w-full flex items-center justify-end'>
             <div id='mobileMenu' className={`logo-section max-lg:flex flex-wrap items-center max-lg:gap-y-6 max-sm:gap-x-4 max-lg:justify-end max-lg:w-[60px] max-xl:pr-0 `}>

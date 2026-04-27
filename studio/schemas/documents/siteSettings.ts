@@ -80,17 +80,7 @@ export const siteSettingsSchema = {
         Rule.required().min(50).error('The site description must be at least 50 characters.'),
       //  Description of the site for SEO
     },
-    {
-      name: 'siteLogo',
-      title: 'Site Logo',
-      type: 'image',
-      group: 'siteInfo',
-      description: 'The logo image to be displayed on the site.',
-      options: {
-        hotspot: true, // Enable hotspot for better image cropping
-      },
-      //  Logo displayed on the site
-    },
+
     {
       name: 'footerLogo',
       title: 'Footer Logo',
