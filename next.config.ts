@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 
-// Use dynamic import for bundle analyzer
 let bundleAnalyzer: (config: NextConfig) => NextConfig = (c) => c;
 try {
-  // @ts-ignore: No types available for @next/bundle-analyzer
   const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
   });
@@ -13,7 +11,6 @@ try {
 }
 
 const nextConfig: NextConfig = {
-  // Image optimization configuration
   images: {
     remotePatterns: [
       {
@@ -25,33 +22,25 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // ignore eslint errors during builds
-
   eslint: {
-    ignoreDuringBuilds: true, // ← Add this line
+    ignoreDuringBuilds: true,
   },
   typescript: {
-    ignoreBuildErrors: true, // ← Add this line
+    ignoreBuildErrors: true,
   },
-  
-  // ... rest of your confinguration
-  // External packages for server components
+
   serverExternalPackages: ['@sanity/client'],
-  // Improve connection stability
   httpAgentOptions: {
     keepAlive: true,
   },
-  // Optimize for development stability
   onDemandEntries: {
-    // Period (in ms) where the server will keep pages in the buffer
     maxInactiveAge: 25 * 1000,
-    // Number of pages that should be kept simultaneously without being disposed
     pagesBufferLength: 2,
   },
-  // Security headers including CSP
+
   async headers() {
     const isDev = process.env.NODE_ENV === 'development';
-    
+
     return [
       {
         source: '/(.*)',
@@ -65,7 +54,7 @@ const nextConfig: NextConfig = {
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
               "media-src 'self' https:",
-              "connect-src 'self' https://www.google-analytics.com https://analytics.google.com",
+              "connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://api.emailjs.com",
               "frame-src 'self' https://www.youtube.com https://player.vimeo.com",
               "object-src 'none'",
               "base-uri 'self'",
