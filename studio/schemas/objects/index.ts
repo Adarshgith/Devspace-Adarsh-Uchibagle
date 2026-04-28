@@ -11,6 +11,7 @@ import heroPortfolio from './heroPortfolio'
 import experienceSection from './experienceSection'
 import projectSection from './projectSection'
 import skillsSection from './skillsSection'
+import contactSection from './contactSection'
 
 export const objectSchemas = [
   // Navigation and layout
@@ -33,6 +34,7 @@ export const objectSchemas = [
   heroPortfolio,
   experienceSection,
   skillsSection,
+  contactSection,
   projectSection,
 ]
 

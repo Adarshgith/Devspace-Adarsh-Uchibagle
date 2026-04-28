@@ -13,6 +13,7 @@ import ExperienceSection from "./ExperienceSection";
 import ProjectsSection from "./ProjectsSection";
 import SkillsSection from "./SkillsSection";
 import PortableTextRenderer from "./PortableTextRenderer";
+import ContactSection from "./ContactSection";
 
 export interface fetauredProductProps {
   entityId: number;
@@ -110,6 +111,11 @@ const RenderBlock = ({ block, index }: { block: any; index: number }) => {
       const normalizedSkillsSectionBlock = { ...block };
       delete normalizedSkillsSectionBlock.Button;
       return <SkillsSection key={index} {...normalizedSkillsSectionBlock} />;
+
+    case "contactSection":
+      const normalizedContactSectionBlock = { ...block };
+      delete normalizedContactSectionBlock.Button;
+      return <ContactSection key={index} {...normalizedContactSectionBlock} />;  
 
     case "banner":
       return <Banner key={index} {...block} />;
